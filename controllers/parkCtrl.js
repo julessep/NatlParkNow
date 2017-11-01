@@ -5,11 +5,14 @@ const parkAPI = process.env.PARK_API;
 
 // gets parks from NPS API
 module.exports.getParks = (req, res, next) => {
-  request.get(`https://developer.nps.gov/api/v1/parks?api_key=${parkAPI}`, (err, response, body) => {
+  request.get(`https://developer.nps.gov/api/v1/parks?api_key=${parkAPI}&limit=519`, (err, response, body) => {
   if (!err && response.statusCode == 200) {
         var parks = JSON.parse(body).data;
-        res.render('parks', {parks});
-        console.log(parks)
+        // makes list of only the results that are National Parks
+        let natParks = parks.filter((park) => {
+          return park.designation==="National Park"
+        })
+        res.render('parks', {natParks});
     }
   })
 }
