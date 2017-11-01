@@ -1,4 +1,6 @@
 h1 parks
   ul
     each park in natParks  
-      li #{park.fullName}
+      li
+      -let url = `/parks/` + park.parkCode
+      a(href=url) #{park.fullName} 

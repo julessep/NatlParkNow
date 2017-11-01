@@ -16,3 +16,16 @@ module.exports.getParks = (req, res, next) => {
     }
   })
 }
+
+// gets one park from API
+module.exports.getSinglePark = (req, res, next) => {
+  // let parkCode = req.params.parkCode;
+  console.log("params", req.params.parkCode)
+  request.get(`https://developer.nps.gov/api/v1/parks?parkCode=${req.params.parkCode}&api_key=${parkAPI}`, (err, response, body) => {
+  if (!err && response.statusCode == 200) {
+        var park = JSON.parse(body).data;
+        res.render('park-details', {park});
+        console.log("park obj", park)
+    }
+  })
+}
