@@ -7,6 +7,6 @@ router.get('/', (req, res, next) => {
   res.render('index');
 });
 
-// routes to go here
+router.use(require('./parksRoute'));
 
 module.exports = router;
