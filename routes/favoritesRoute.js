@@ -8,9 +8,9 @@ const {
   addFavorite
 } = require('../controllers/favoriteCtrl.js');
 
-// router.get('/favorites/:parkCode', addFavorite);
+router.get('/favorites', getFavorites);
 // router.get('/favorites/:parkCode', getSingleFavorite);
-router.post('/favorites/:parkCode', addFavorite);
+// router.post('/favorites/:parkCode', addFavorite);
 
 module.exports = router;
 
