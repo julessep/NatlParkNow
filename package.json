@@ -4,10 +4,10 @@
 		"main": "index.js",
 		"scripts": {
 				"start": "nodemon app.js",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build-css": "./bin/build-css",
-        "watch-css": "./bin/watch-css"
-    },
+				"test": "echo \"Error: no test specified\" && exit 1",
+				"build-css": "./bin/build-css",
+				"watch-css": "./bin/watch-css"
+		},
 		"keywords": [],
 		"author": "",
 		"license": "ISC",
@@ -23,6 +23,7 @@
 				"jquery": "^3.2.1",
 				"jsdoc": "^3.5.5",
 				"method-override": "^2.3.10",
+				"mysql2": "^1.4.2",
 				"passport": "^0.4.0",
 				"passport-local": "^1.0.0",
 				"pg": "^7.3.0",

@@ -1,6 +1,6 @@
 {
   "development": {
-    "database": "site_bangazon",
+    "database": "natl_park",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },

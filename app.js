@@ -11,12 +11,8 @@ var request = require('request');
 
 const port = process.env.PORT || 4000;
 const parkAPI = process.env.PARK_API;
-console.log(port);
-// using require('./models') to get the models may create more than one connection to the database. To avoid that, the models variable must be somehow singleton-esque. This can be achieved by attaching the models module to the application:
-// ---------------------------- app.set('models', require('./models')); 
-//pulls in models/index.js by default. Index exports all the models you define in the models folder. So cool.
-// And when you need to require a class of the model in a controller, use this insise a middleware function rather than a direct import:
-// const { Computer } = req.app.get('models');
+
+app.set('models', require('./models')); 
 
 app.set('view engine', 'pug');
 
@@ -45,9 +41,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(flash());
 
-
-
-// note that this needs to be after the above stuff
 app.use(routes);
 
 // Add a 404 error handler
