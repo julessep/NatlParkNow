@@ -9,5 +9,6 @@ router.get('/', (req, res, next) => {
 
 router.use(require('./authRoute'));
 router.use(require('./parksRoute'));
+router.use(require('./favoritesRoute'));
 
 module.exports = router;
