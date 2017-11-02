@@ -1,0 +1,10 @@
+if session.passport
+  span #{session.passport.user.username}
+  form(method="POST")
+    button(type="submit" formaction="/logout") Logout
+  a(href="/favorites") Favorites
+  br
+else if !session.passport
+  button
+    a(href="/login") Login
+a(href="/parks" id="hr") Explore Parks

@@ -62,6 +62,6 @@ module.exports.welcome = (req, res, next) => {
 // logging out
 module.exports.logout = (req, res) => {
   req.session.destroy(function(err) {
-    res.redirect('/');
+    res.redirect('/parks');
   });
 };

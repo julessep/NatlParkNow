@@ -14,20 +14,3 @@ module.exports.getFavorites = (req, res, next) => {
     next(err); 
   });
 };
-// adds park to favorites table in db
-// module.exports.addFavorite = (req, res, next) => {
-//   console.log(req.session.passport.user.id)
-//   let currentPark = req.params.parkCode;
-//   const { Favorite } = req.app.get('models');
-//   let saveFavorite = {
-//     userId: req.session.passport.user.id,
-//     parkCode: currentPark
-//   }
-//   Favorite.create(saveFavorite)
-//   .then( () => {
-//     res.render('parks')
-//   })
-//   .catch( (err) => {
-//     next(err);
-//   }); 
-// }
