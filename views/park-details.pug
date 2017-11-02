@@ -17,3 +17,6 @@ block content
   p Friday: #{hours.standardHours.friday} 
   p Saturday: #{hours.standardHours.saturday} 
   p Sunday: #{hours.standardHours.sunday} 
+
+  form(action=`/parks/${park.parkCode}`, method="POST")
+    button(type="submit") Save to favorites

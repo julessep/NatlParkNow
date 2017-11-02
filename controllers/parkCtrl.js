@@ -19,14 +19,30 @@ module.exports.getParks = (req, res, next) => {
 
 // gets one park from API
 module.exports.getSinglePark = (req, res, next) => {
-  // console.log("params", req.params.parkCode)
   request.get(`https://developer.nps.gov/api/v1/parks?parkCode=${req.params.parkCode}&fields=operatingHours,images&api_key=${parkAPI}`, (err, response, body) => {
   if (!err && response.statusCode == 200) {
         var park = JSON.parse(body).data[0];
         var hours = JSON.parse(body).data[0].operatingHours[0];
         var images = JSON.parse(body).data[0].images[0];
         res.render('park-details', {park, hours, images});
-        console.log("park obj", images.url)
     }
   })
+}
+
+// adds park to favorites table in db
+module.exports.savePark = (req, res, next) => {
+  console.log("Favorite saved called")
+  let currentPark = req.params.parkCode;
+  const { Favorite } = req.app.get('models');
+  let saveFavorite = {
+    userId: req.session.passport.user.id,
+    parkCode: currentPark
+  }
+  Favorite.create(saveFavorite)
+  .then( () => {
+    module.exports.getParks(req, res, next)
+  })
+  .catch( (err) => {
+    next(err);
+  }); 
 }
