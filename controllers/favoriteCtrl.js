@@ -4,8 +4,13 @@ require('dotenv').config();
 const parkAPI = process.env.PARK_API;
 
 module.exports.getFavorites = (req, res, next) => {
+  // let currentUser = req.session.passport.user.id;
   const { Favorite } = req.app.get('models');
-  Favorite.findAll()
+  Favorite.findAll({
+    where: {
+      userId: req.session.passport.user.id
+    }
+  })
   .then( (favorites) => {
     res.render('favorites', {favorites});
     console.log(favorites)

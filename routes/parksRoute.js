@@ -11,6 +11,6 @@ const {
 
 router.get('/parks', getParks);
 router.get('/parks/:parkCode', getSinglePark);
-router.post('/parks/:parkCode/:fullName', savePark, getSinglePark);
+router.post('/parks/:parkCode/:fullName', savePark);
 
 module.exports = router;
