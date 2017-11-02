@@ -1,4 +1,19 @@
 extends layout.pug
 block content
-  h1 Park Details
-    p #{park.fullName}
+  h1 #{park.fullName}
+  h5 About    
+  p #{park.description}
+  h5 Weather  
+  p #{park.weatherInfo}
+  h5 Directions  
+  p #{park.directionsInfo}
+  h5 Operating Hours  
+  p #{hours.name}
+  p #{hours.description} 
+  p Monday: #{hours.standardHours.monday} 
+  p Tuesday: #{hours.standardHours.tuesday} 
+  p Wednesday: #{hours.standardHours.wednesday} 
+  p Thursday: #{hours.standardHours.thursday} 
+  p Friday: #{hours.standardHours.friday} 
+  p Saturday: #{hours.standardHours.saturday} 
+  p Sunday: #{hours.standardHours.sunday} 
