@@ -1,6 +1,8 @@
-h1 parks
-  ul
-    each park in natParks  
-      li
-      -let url = `/parks/` + park.parkCode
-      a(href=url) #{park.fullName} 
+extends layout.pug
+block content
+  h1 parks
+    ul
+      each park in natParks  
+        li
+        -let url = `/parks/` + park.parkCode
+        a(href=url) #{park.fullName} 
