@@ -14,6 +14,9 @@ module.exports = {
       },
       parkCode: {
         type: Sequelize.STRING
+      },
+      name: {
+        type: Sequelize.STRING
       }
     });
   },

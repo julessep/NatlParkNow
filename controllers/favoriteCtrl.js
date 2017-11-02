@@ -8,6 +8,7 @@ module.exports.getFavorites = (req, res, next) => {
   Favorite.findAll()
   .then( (favorites) => {
     res.render('favorites', {favorites});
+    console.log(favorites)
   })
   .catch( (err) => {
     next(err); 

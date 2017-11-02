@@ -33,10 +33,12 @@ module.exports.getSinglePark = (req, res, next) => {
 module.exports.savePark = (req, res, next) => {
   console.log("Favorite saved called")
   let currentPark = req.params.parkCode;
+  let parkName = req.params.fullName;
   const { Favorite } = req.app.get('models');
   let saveFavorite = {
     userId: req.session.passport.user.id,
-    parkCode: currentPark
+    parkCode: currentPark,
+    name: parkName
   }
   Favorite.create(saveFavorite)
   .then( () => {
