@@ -1,16 +1,17 @@
 var fs = require('fs');
 var express = require('express');
 var request = require('request');
+var rp = require('request-promise-native');
 require('dotenv').config();
 const parkAPI = process.env.PARK_API;
-let natParks;
+// let natParks;
 let parkCode = [];
 
+// gets park codes from db and exports to array
 module.exports.getParks = (req, res, next) => {
     const { Park } = req.app.get('models');
     Park.findAll()
     .then( (parkData) => {
-      // console.log(parkData)
       if (parkData[0]) {
         for(var i = 0; i < parkData.length; i++) {
         parkCode.push(parkData[i].parkCode) //get parkCode to then be used by API
@@ -18,55 +19,44 @@ module.exports.getParks = (req, res, next) => {
       } else {
         extractParks(res,res,next)
       }
-      console.log(parkCode)
+    })
+    .then( () => {
+      module.exports.displayParks(req, res, next)
     })
     .catch( (err) => {
       next(err);
     }); 
 };
 
-
-// let getParkInfo = (req, res, next) => {
-//   const { Park } = req.app.get('models');
-//   Park.findAll()
-//   .then( (parkData) => {
-//     for(var i = 0; i < parkData.length; i++) {
-//       parkCode = (parkData[i].parkCode) //get parkCode to then be used by API
-//       return parkCode
-//       }
-//     })
-//   }
-    
-// module.exports.getParks = (req, res, next) => {
-  // console.log(parkCode[0])
-  // request.get(`https://developer.nps.gov/api/v1/parks?parkCode=${parkCode}&fields=operatingHours,images&api_key=${parkAPI}`, (err, response, body) => {
-  //   if (!err && response.statusCode == 200) {
-  //         var natlPark = JSON.parse(body).data[0];
-
-  //         res.render('parks', {natlPark});
-  //     }
-  
-  //   })
-// }
-  
-  
-
-    // if(parkData[0]){
-    //   request.get(`https://developer.nps.gov/api/v1/parks?parkCode=${req.params.parkCode}&fields=operatingHours,images&api_key=${parkAPI}`, (err, response, body) => {
-    //     if (!err && response.statusCode == 200) {
-    //       var natParks = JSON.parse(body).data;
-    //       // makes list of only the results that are National Parks
-    //           natParks = parks.filter((park) => {
-    //             return park.designation==="National Park"
-    //           })
-    //           return natParks
-    //           res.render('parks', {natParks});
-    //       }
-    //     })
-      
-    // }
-  // })
-// }
+module.exports.displayParks = (req, res, next) => {
+  let parkPromise = [];
+  let natlParks = [];
+  let park;
+  for(var i = 0; i < parkCode.length; i++) {
+    var nps = {
+      uri: `https://developer.nps.gov/api/v1/parks?parkCode=${parkCode[i]}&api_key=${parkAPI}`,
+      json: true
+    };
+    parkPromise.push(
+      new Promise( (resolve, reject) => {
+      rp.get(nps)
+        .then( (parks) => {
+          // console.log("parks length", parks)
+          resolve(parks)
+        })
+        .catch( (err) => {
+          reject(err)
+        })
+      })
+    )
+  } 
+  Promise.all([parkPromise]).then(values => {
+    resolve(values)
+    console.log("values", values)
+  }).catch( (err) => {
+    console.log(err)
+  })
+}
 
 // gets parks from NPS API
 let extractParks = (req, res, next) => {
@@ -85,16 +75,12 @@ let extractParks = (req, res, next) => {
           }
           Park.create(savePark)
           .then( () => {
-            module.exports.getParks(req, res, next)
+            getParkCode(req, res, next)
           })
           .catch( (err) => {
             next(err);
           }); 
         }
-        // console.log(allParks[0].fullName)
-        // console.log(allParks[0].parkCode)
-        
-        // res.render('parks', {natParks});
     }
   })
 }
