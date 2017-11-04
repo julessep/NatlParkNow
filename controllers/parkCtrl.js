@@ -4,8 +4,7 @@ var request = require('request');
 var rp = require('request-promise-native');
 require('dotenv').config();
 const parkAPI = process.env.PARK_API;
-// let natParks;
-let parkCode = [];
+let natParks = [];
 
 // gets park codes from db and exports to array
 module.exports.getParks = (req, res, next) => {
@@ -14,49 +13,50 @@ module.exports.getParks = (req, res, next) => {
     .then( (parkData) => {
       if (parkData[0]) {
         for(var i = 0; i < parkData.length; i++) {
-        parkCode.push(parkData[i].parkCode) //get parkCode to then be used by API
-        } 
-      } else {
-        extractParks(res,res,next)
-      }
-    })
-    .then( () => {
-      module.exports.displayParks(req, res, next)
+        natParks.push(parkData[i])
+      } 
+    } else {
+      extractParks(res,res,next)
+    }
+  })
+  .then( () => {
+      res.render('parks', {natParks})
     })
     .catch( (err) => {
       next(err);
     }); 
 };
 
-module.exports.displayParks = (req, res, next) => {
-  let parkPromise = [];
-  let natlParks = [];
-  let park;
-  for(var i = 0; i < parkCode.length; i++) {
-    var nps = {
-      uri: `https://developer.nps.gov/api/v1/parks?parkCode=${parkCode[i]}&api_key=${parkAPI}`,
-      json: true
-    };
-    parkPromise.push(
-      new Promise( (resolve, reject) => {
-      rp.get(nps)
-        .then( (parks) => {
-          // console.log("parks length", parks)
-          resolve(parks)
-        })
-        .catch( (err) => {
-          reject(err)
-        })
-      })
-    )
-  } 
-  Promise.all([parkPromise]).then(values => {
-    resolve(values)
-    console.log("values", values)
-  }).catch( (err) => {
-    console.log(err)
-  })
-}
+// let parkPromise = []; //defining empty array to later push all of the park data to
+// module.exports.displayParks = (req, res, next) => {
+//   for(var i = 0; i < parkCode.length; i++) {
+//     // using the request-promise-native module to make calls to API
+//     var nps = {
+//       uri: `https://developer.nps.gov/api/v1/parks?parkCode=${parkCode[i]}&api_key=MddxhGWotXba0C7BL1TsFLoWSolAf7pHiSbZ92E8`,
+//       json: true
+//     };
+//     parkPromise.push(
+//       new Promise( (resolve, reject) => {
+//       rp.get(nps)
+//         .then( (parks) => {
+//           // console.log("park data loop", parks)//geting data object about each park logging as own array
+//           resolve("parks", parks) //has error that resolve is not defined 
+//         })
+//         .catch( (err) => {
+//           reject(err)
+//         })
+//       })
+//     )
+//   } 
+//   console.log([parkPromise]) //logs as an array of 'Promise { <pending> }' for each park object 
+// }
+// Promise.all([parkPromise])
+// .then(parks => {
+//   return(parks)
+//   console.log("parks", parks) //this doesn't run at all
+// }).catch( (err) => {
+//   console.log(err)
+// })
 
 // gets parks from NPS API
 let extractParks = (req, res, next) => {
