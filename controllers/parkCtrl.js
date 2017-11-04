@@ -4,6 +4,7 @@ var request = require('request');
 var rp = require('request-promise-native');
 require('dotenv').config();
 const parkAPI = process.env.PARK_API;
+var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
 let natParks = [];
 
 // gets park codes from db and exports to array
@@ -20,43 +21,12 @@ module.exports.getParks = (req, res, next) => {
     }
   })
   .then( () => {
-      res.render('parks', {natParks})
+    res.render('parks', { natParks })
     })
     .catch( (err) => {
       next(err);
     }); 
 };
-
-// let parkPromise = []; //defining empty array to later push all of the park data to
-// module.exports.displayParks = (req, res, next) => {
-//   for(var i = 0; i < parkCode.length; i++) {
-//     // using the request-promise-native module to make calls to API
-//     var nps = {
-//       uri: `https://developer.nps.gov/api/v1/parks?parkCode=${parkCode[i]}&api_key=MddxhGWotXba0C7BL1TsFLoWSolAf7pHiSbZ92E8`,
-//       json: true
-//     };
-//     parkPromise.push(
-//       new Promise( (resolve, reject) => {
-//       rp.get(nps)
-//         .then( (parks) => {
-//           // console.log("park data loop", parks)//geting data object about each park logging as own array
-//           resolve("parks", parks) //has error that resolve is not defined 
-//         })
-//         .catch( (err) => {
-//           reject(err)
-//         })
-//       })
-//     )
-//   } 
-//   console.log([parkPromise]) //logs as an array of 'Promise { <pending> }' for each park object 
-// }
-// Promise.all([parkPromise])
-// .then(parks => {
-//   return(parks)
-//   console.log("parks", parks) //this doesn't run at all
-// }).catch( (err) => {
-//   console.log(err)
-// })
 
 // gets parks from NPS API
 let extractParks = (req, res, next) => {
@@ -84,6 +54,31 @@ let extractParks = (req, res, next) => {
     }
   })
 }
+
+// module.exports.tweets =(req,res, next) => {
+//   var url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+//   var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
+  
+//   request({ url: url,
+//       method:'GET',
+//       qs:{"screen_name":"stadolf"},
+//       json:true,
+//       headers: {
+//           "Authorization": "Bearer " + bearerToken
+//       }
+  
+//   }, function(err, resp, body) {
+  
+//       console.dir(body);
+  
+//   })
+//   .then( () => {
+//     res.render('parks', { natParks })
+//     })
+//     .catch( (err) => {
+//       next(err);
+//     }); 
+// }
 
 // gets one park from API
 module.exports.getSinglePark = (req, res, next) => {
