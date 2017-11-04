@@ -4,13 +4,10 @@ const { Router } = require('express');
 const router = Router();
 
 const {
-  getFavorites,
-  addFavorite
+  getFavorites
 } = require('../controllers/favoriteCtrl.js');
 
-router.get('/favorites', isLoggedIn, getFavorites );
-// router.get('/favorites/:parkCode', getSingleFavorite);
-// router.post('/favorites/:parkCode', addFavorite);
+router.get('/favorites', isLoggedIn, getFavorites); 
 
 module.exports = router;
 
