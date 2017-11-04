@@ -8,9 +8,13 @@ var session = require('express-session');
 let bodyParser = require('body-parser');
 const flash = require('express-flash');
 var request = require('request');
+// const bearerToken = require('./controllers/createBearerToken')
 
 const port = process.env.PORT || 4000;
 const parkAPI = process.env.PARK_API;
+var key = process.env.TWITTER_CONSUMER_KEY;
+var secret = process.env.TWITTER_CONSUMER_SECRET;
+var theBearerToken = process.env.TWITTER_BEARER_TOKEN;
 
 app.set('models', require('./models')); 
 
@@ -32,6 +36,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 // This custom middleware adds the logged-in user's info to the locals variable,
 // so we can access it in the Pug templates
+
 app.use( (req, res, next) => {
   res.locals.session = req.session;
   // console.log('res.locals.session', res.locals.session);
@@ -40,6 +45,11 @@ app.use( (req, res, next) => {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(flash());
+
+// app.use( (req, res, next) => {
+//   bearerToken()
+//   next()
+// });
 
 app.use(routes);
 
