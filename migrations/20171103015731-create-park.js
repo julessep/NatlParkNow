@@ -11,8 +11,23 @@ module.exports = {
       fullName: {
         type: Sequelize.STRING
       },
+      name: {
+        type: Sequelize.STRING
+      },
       parkCode: {
         type: Sequelize.STRING
+      },
+      description: {
+        type: Sequelize.TEXT
+      },
+      states: {
+        type: Sequelize.STRING
+      },
+      weatherInfo: {
+        type: Sequelize.TEXT
+      },
+      url: {
+        type: Sequelize.STRING        
       }
     });
   },
