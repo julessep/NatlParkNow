@@ -13,5 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "userId"
     });
   };
+
+  User.associate = function(models) {
+    User.belongsToMany(models.Park, {
+      as: 'favorites',
+      through: 'UserFavorites',
+      onDelete: 'CASCADE'
+    });
+  };
+  
   return User;
 };

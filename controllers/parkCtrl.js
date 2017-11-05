@@ -62,9 +62,9 @@ let extractParks = (req, res, next) => {
 
 module.exports.getSinglePark = (req, res, next) => {
   const { Park } = req.app.get('models');
-  let currentPark = req.params.parkCode;
+  let currentPark = req.params.id;
   Park.findAll({
-    where: { parkCode: currentPark }
+    where: { id: currentPark }
   })
   .then(singlePark => {
     let park = singlePark[0];
@@ -99,12 +99,12 @@ module.exports.tweets =(req,res, next) => {
 
 // adds park to favorites table in db
 module.exports.savePark = (req, res, next) => {
-  let currentPark = req.params.parkCode;
+  let currentPark = req.params.id;
   let parkName = req.params.fullName;
   const { Favorite } = req.app.get('models');
   let saveFavorite = {
     userId: req.session.passport.user.id,
-    parkCode: currentPark,
+    id: currentPark,
     name: parkName
   }
   Favorite.create(saveFavorite)

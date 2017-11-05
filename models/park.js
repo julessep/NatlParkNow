@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {timestamps: false});
 
   Park.associate = function(models) {
+    Park.belongsToMany(models.User, {
+      through: 'UserFavorites',
+      onDelete: 'CASCADE'
+    });
   };
 
   return Park;
