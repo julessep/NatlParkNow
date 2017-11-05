@@ -21,7 +21,8 @@ module.exports.getParks = (req, res, next) => {
     }
   })
   .then( () => {
-    res.render('parks', { natParks })    
+    res.render('parks', { natParks }) 
+    // getTweets(req,res, next)   
   })
   .catch( (err) => {
     next(err);
@@ -61,36 +62,45 @@ let extractParks = (req, res, next) => {
 }
 
 module.exports.getSinglePark = (req, res, next) => {
-  const { Park } = req.app.get('models');
-  let currentPark = req.params.id;
-  Park.findAll({
-    where: { id: currentPark }
-  })
-  .then(singlePark => {
-    let park = singlePark[0];
-    res.render('park-details', { park });
-  })
-  .catch(err => {
-    next(err);
-  });
+  // return new Promise ( (resolve, reject) => {
+    const { Park } = req.app.get('models');
+    let currentPark = req.params.id;
+    Park.findAll({
+      where: { id: currentPark }
+    })
+    .then(singlePark => {
+      let park = singlePark[0];
+      res.render('park-details', { park });
+    })
+    .then( parks => {
+      getTweets(req,res, next)
+    })
+    .catch(err => {
+      next(err);
+    });
+// })
 };
 
-module.exports.tweets =(req,res, next) => {
+let getTweets =(req,res, next) => {
   var url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
   var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
   request({ url: url,
     method:'GET',
-    qs:{"screen_name":"stadolf"},
+    qs:{"screen_name":"Interior"},
     json:true,
     headers: {
         "Authorization": "Bearer " + bearerToken
     }
   }, function(err, resp, body) {
   
-      // console.dir(body);
+      console.dir(body);
   
   })
   .then( () => {
+    res.render('parks', { natParks }) 
+    // res.render('park-details', { park });
+    
+    
     })
     .catch( (err) => {
       next(err);
@@ -99,12 +109,12 @@ module.exports.tweets =(req,res, next) => {
 
 // adds park to favorites table in db
 module.exports.savePark = (req, res, next) => {
-  let currentPark = req.params.id;
+  let currentPark = req.params.parkCode;
   let parkName = req.params.fullName;
   const { Favorite } = req.app.get('models');
   let saveFavorite = {
     userId: req.session.passport.user.id,
-    id: currentPark,
+    parkCode: currentPark,
     name: parkName
   }
   Favorite.create(saveFavorite)
