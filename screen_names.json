@@ -1,0 +1,196 @@
+{
+  "screen_names": [
+    {
+      "parkCode": "acad",
+      "screenName": "AcadiaNPS"
+    },
+    {
+      "parkCode": "arch",
+      "screenName": "ArchesNPS"
+    },
+    {
+      "parkCode": "badl",
+      "screenName": "BadlandsNPS"
+    },
+    {
+      "parkCode": "bibe",
+      "screenName": "BigBendNPS"
+    },
+    {
+      "parkCode": "bisc",
+      "screenName": "BiscayneNPS"
+    },
+    {
+      "parkCode": "blca",
+      "screenName": "BlackCanyonNPS"
+    },
+    {
+      "parkCode": "brca",
+      "screenName": "BryceCanyonNPS"
+    },
+    {
+      "parkCode": "cany",
+      "screenName": "CanyonlandNPS"
+    },
+    {
+      "parkCode": "care",
+      "screenName": "CapitolReefNPS"
+    },
+    {
+      "parkCode": "cave",
+      "screenName": "CavernsNPS"
+    },
+    {
+      "parkCode": "chis",
+      "screenName": ""
+    },
+    {
+      "parkCode": "cong",
+      "screenName": ""
+    },
+    {
+      "parkCode": "crla",
+      "screenName": ""
+    },
+    {
+      "parkCode": "cuva",
+      "screenName": ""
+    },
+    {
+      "parkCode": "deva",
+      "screenName": "DeathValleyNPS"
+    },
+    {
+      "parkCode": "drto",
+      "screenName": "DryTortugasNPS"
+    },
+    {
+      "parkCode": "ever",
+      "screenName": "EvergladesNPS"
+    },
+    {
+      "parkCode": "glac",
+      "screenName": "GlacierNPS"
+    },
+    {
+      "parkCode": "grca",
+      "screenName": "GrandCanyonNPS"
+    },
+    {
+      "parkCode": "grte",
+      "screenName": "GrandTetonNPS"
+    },
+    {
+      "parkCode": "grba",
+      "screenName": "GreatBasinNPS"
+    },
+    {
+      "parkCode": "grsm",
+      "screenName": "GreatSmokyNPS"
+    },
+    {
+      "parkCode": "gumo",
+      "screenName": "GuadalupeMtnsNP"
+    },
+    {
+      "parkCode": "hale",
+      "screenName": "Interior"
+    },
+    {
+      "parkCode": "havo",
+      "screenName": "volcanoes_nps"
+    },
+    {
+      "parkCode": "hosp",
+      "screenName": "Interior"
+    },
+    {
+      "parkCode": "isro",
+      "screenName": "Interior"
+    },
+    {
+      "parkCode": "jotr",
+      "screenName": "JoshuaTreeNPS"
+    },
+    {
+      "parkCode": "kefj",
+      "screenName": "Interior"
+    },
+    {
+      "parkCode": "kova",
+      "screenName": "NatlParkService"
+    },
+    {
+      "parkCode": "lavo",
+      "screenName": "LassenNPS"
+    },
+    {
+      "parkCode": "maca",
+      "screenName": "MammothCaveNP"
+    },
+    {
+      "parkCode": "meve",
+      "screenName": "Interior"
+    },
+    {
+      "parkCode": "mora",
+      "screenName": "MountRainierNPS"
+    },
+    {
+      "parkCode": "noca",
+      "screenName": "NCascadesNPS"
+    },
+    {
+      "parkCode": "olym",
+      "screenName": "OlympicNP"
+    },
+    {
+      "parkCode": "pefo",
+      "screenName": "Petrified"
+    },
+    {
+      "parkCode": "pinn",
+      "screenName": "PinnaclesNPS"
+    },
+    {
+      "parkCode": "romo",
+      "screenName": "RockyNPS"
+    },
+    {
+      "parkCode": "sagu",
+      "screenName": "SaguaroNPS"
+    },
+    {
+      "parkCode": "shen",
+      "screenName": "Shenandoah"
+    },
+    {
+      "parkCode": "thro",
+      "screenName": "TRooseveltNPS"
+    },
+    {
+      "parkCode": "viis",
+      "screenName": "MountRainierNPS"
+    },
+    {
+      "parkCode": "voya",
+      "screenName": "NatlParkService"
+    },
+    {
+      "parkCode": "wica",
+      "screenName": "WindCaveNPS"
+    },
+    {
+      "parkCode": "yell",
+      "screenName": "YellowstoneNPS"
+    },
+    {
+      "parkCode": "yose",
+      "screenName": "YosemiteNPS"
+    },
+    {
+      "parkCode": "zion",
+      "screenName": "ZionNPS"
+    }
+  ]
+}

@@ -10,7 +10,9 @@ let natParks = []; // array for storing park objects
 // gets information of all parks
 module.exports.getParks = (req, res, next) => {
     const { Park } = req.app.get('models');
-    Park.findAll()
+    Park.findAll({
+      order: ['states']
+    })
     .then( (parkData) => {
       if (parkData[0]) { //checks if there's any information in Park table
         for(var i = 0; i < parkData.length; i++) {
@@ -61,6 +63,7 @@ let extractParks = (req, res, next) => {
   })
 }
 
+let onePark =[]
 module.exports.getSinglePark = (req, res, next) => {
   // return new Promise ( (resolve, reject) => {
     const { Park } = req.app.get('models');
@@ -70,23 +73,35 @@ module.exports.getSinglePark = (req, res, next) => {
     })
     .then(singlePark => {
       let park = singlePark[0];
-      res.render('park-details', { park });
+      onePark.push(park)
+      // res.render('park-details', { park });
+      // getTweets(req,res, next)
+      twitterQ()
     })
-    .then( parks => {
-      getTweets(req,res, next)
-    })
+    // .then( park => {
+    //   console.log("PARKKKKKK", park)
+    // })
     .catch(err => {
       next(err);
     });
 // })
 };
 
-let getTweets =(req,res, next) => {
-  var url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+let twitterQ = (codeURL) => {
+  let parkFullName = onePark[0].fullName; //
+  codeURL = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" + parkFullName;
+  console.log(codeURL)
+  return codeURL
+}
+let getTweets = (req, res, next) => {
+  // console.log(onePark[0])
+  let parkFullName = onePark[0].fullName; //
+  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${parkFullName}`;
   var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
-  request({ url: url,
+  request({ 
+    url: url,
     method:'GET',
-    qs:{"screen_name":"Interior"},
+    // qs:{"screen_name":"BryceCanyonNPS"},
     json:true,
     headers: {
         "Authorization": "Bearer " + bearerToken
@@ -96,15 +111,16 @@ let getTweets =(req,res, next) => {
       console.dir(body);
   
   })
-  .then( () => {
-    res.render('parks', { natParks }) 
-    // res.render('park-details', { park });
-    
-    
-    })
-    .catch( (err) => {
-      next(err);
-    }); 
+  // .then( () => {
+  //   // res.render('parks', { natParks }) 
+  //   // res.render('park-details', { park });
+  //   console.log(tweetinfo)
+  //   // module.exports.getSinglePark(req, res, next)
+
+  //   })
+  //   .catch( (err) => {
+  //     next(err);
+  //   }); 
 }
 
 // adds park to favorites table in db
