@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Handle.associate = function(models) {
     Handle.hasOne(models.Park, {
-      foreignKey: 'handleId',
+      foreignKey: 'screenName',
       onDelete: 'CASCADE'
     });
   };

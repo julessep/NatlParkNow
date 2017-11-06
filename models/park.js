@@ -7,8 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     states: DataTypes.STRING,
     weatherInfo: DataTypes.TEXT,
-    url: DataTypes.STRING,
-    screenName: DataTypes.STRING
+    url: DataTypes.STRING
   }, {timestamps: false});
 
   Park.associate = function(models) {
@@ -20,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Park.associate = function(models) {
     Park.belongsTo(models.Handle, {
-      foreignKey: "handleId"
+      foreignKey: "screenName"
     });
   };
 

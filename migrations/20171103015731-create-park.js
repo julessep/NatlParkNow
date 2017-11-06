@@ -11,7 +11,7 @@ module.exports = {
       fullName: {
         type: Sequelize.STRING
       },
-      handleId: {
+      screenName: {
         type: Sequelize.STRING
       },
       name: {
@@ -30,9 +30,6 @@ module.exports = {
         type: Sequelize.TEXT
       },
       url: {
-        type: Sequelize.STRING        
-      },
-      screenName: {
         type: Sequelize.STRING        
       }
     });

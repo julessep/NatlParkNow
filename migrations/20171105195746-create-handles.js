@@ -5,17 +5,18 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER
       },
       screenName: {
+        allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING
       },
       parkCode: {
         type: Sequelize.STRING
       }
     })
-  } ,
+  },
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('Handles');
