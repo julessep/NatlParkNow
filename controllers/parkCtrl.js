@@ -76,7 +76,7 @@ module.exports.getSinglePark = (req, res, next) => {
       onePark.push(park)
       // res.render('park-details', { park });
       // getTweets(req,res, next)
-      twitterQ()
+      twitterQ(onePark)
     })
     // .then( park => {
     //   console.log("PARKKKKKK", park)
@@ -86,13 +86,13 @@ module.exports.getSinglePark = (req, res, next) => {
     });
 // })
 };
-
-let twitterQ = (codeURL) => {
-  let parkFullName = onePark[0].fullName; //
-  codeURL = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" + parkFullName;
-  console.log(codeURL)
-  return codeURL
-}
+// encode string 
+// let twitterQ = (onePark) => {
+//   let parkFullName = onePark[0].fullName; //
+//   codeURL = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" + parkFullName;
+//   console.log(codeURL)
+//   return codeURL
+// }
 let getTweets = (req, res, next) => {
   // console.log(onePark[0])
   let parkFullName = onePark[0].fullName; //
