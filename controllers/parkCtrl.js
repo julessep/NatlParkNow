@@ -32,31 +32,27 @@ module.exports.getSinglePark = (req, res, next) => {
     let currentPark = req.params.id;
     Handle.findOne({where: {parkId: currentPark}, include: {model: Park}})
     .then( (data) => {
-      let park = data;
+      console.log(data)
+      let park = data.Park;
       parkDetails.push(park)
       // console.log("Access park details", parkDetails[0].Park.fullName);
       //  console.log("twitter handle", parkDetails[0].screenName) //logs twitter handle
-      getTweets(parkDetails)
+      // getTweets(parkDetails)
+      res.render('park-details', { park })
     })
     .catch(err => {
       next(err);
     });
 };
-// encode string 
-// let twitterQ = (onePark) => {
-//   let parkFullName = onePark[0].fullName; //
-//   codeURL = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" + parkFullName;
-//   console.log(codeURL)
-//   return codeURL
-// }
+
 let getTweets = (req, res, next) => {
   console.log("run getTweets");
   // console.log("Access park details", parkDetails[0].Park.fullName);
   //  console.log("twitter handle", parkDetails[0].screenName);
   let screen_name = parkDetails[0].screenName; //
-  // var url = `https://api.twitter.com/1.1/search/tweets.json?q=%40${screen_name}`;
-  // var parkPics = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}`//gets all the tweets back from the twitter handle with the screen name and posted by the screen name
-  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}`;//gets tweets that reference the screen name eg fabios trip to the park
+  // var url = `https://api.twitter.com/1.1/search/tweets.json?q=%40${screen_name}&count=25`;
+  var url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}&count=25`//gets all the tweets back from the twitter handle with the screen name and posted by the screen name
+  // var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}`;//gets tweets that reference the screen name eg fabios trip to the park
   // var url = (encodeURI(uri));
   
   var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
@@ -69,10 +65,10 @@ let getTweets = (req, res, next) => {
         "Authorization": "Bearer " + bearerToken
     }
   }, function(err, resp, body) {
-  
-      console.dir(body);
-  
-  })
+      return body
+      
+    })
+    // console.log(body);
   // .then( () => {
   //   // res.render('parks', { natParks }) 
   //   // res.render('park-details', { park });
