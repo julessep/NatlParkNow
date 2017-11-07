@@ -1,5 +1,5 @@
 {
-    "allParks": [
+    "parks": [
         {
             "states": "ME",
             "latLong": "lat:44.30777545, long:-68.30063316",
