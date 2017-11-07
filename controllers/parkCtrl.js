@@ -15,10 +15,11 @@ module.exports.getParks = (req, res, next) => {
   .then( (parkData) => {
       for(var i = 0; i < parkData.length; i++) {
         natParks.push(parkData[i])// adds all park info to array
-    } 
-  })
-  .then( () => {
-    res.render('parks', { natParks }) 
+      } 
+    })
+    .then( () => {
+      res.render('parks', { natParks }) 
+      return natParks;
   })
   .catch( (err) => {
     next(err);
@@ -27,26 +28,28 @@ module.exports.getParks = (req, res, next) => {
 
 let onePark =[]
 module.exports.getSinglePark = (req, res, next) => {
-  // return new Promise ( (resolve, reject) => {
-    const { Park } = req.app.get('models');
+    const { Park, Handle } = req.app.get('models');
     let currentPark = req.params.id;
-    Park.findAll({
-      where: { id: currentPark }
+    Handle.findOne({where: {parkId: currentPark}, include: [{model: Park}]})
+    .then( (data) => {
+      console.log(data);
+       let twitterHandle = data.screenName;
+       console.log("twitterHandle", twitterHandle)
     })
-    .then(singlePark => {
-      let park = singlePark[0];
-      onePark.push(park)
+    // .then(singlePark => {
+    //   let park = singlePark[0];
+    //   onePark.push(park)
+    //   console.log(onePark)
       // res.render('park-details', { park });
       // getTweets(req,res, next)
-      twitterQ(onePark)
-    })
+      // twitterQ(onePark)
+    // })
     // .then( park => {
-    //   console.log("PARKKKKKK", park)
+    //   console.log(park)
     // })
     .catch(err => {
       next(err);
     });
-// })
 };
 // encode string 
 // let twitterQ = (onePark) => {
