@@ -53,23 +53,22 @@ let getTweets = (req, res, next) => {
   console.log("run getTweets");
   // console.log("Access park details", parkDetails[0].Park.fullName);
   //  console.log("twitter handle", parkDetails[0].screenName);
-
-  // let parkFullName = onePark[0].fullName; //
-  // var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${parkFullName}`;
-  // var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
-  // request({ 
-  //   url: url,
-  //   method:'GET',
-  //   // qs:{"screen_name":"BryceCanyonNPS"},
-  //   json:true,
-  //   headers: {
-  //       "Authorization": "Bearer " + bearerToken
-  //   }
-  // }, function(err, resp, body) {
+  let screen_name = parkDetails[0].screenName; //
+  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}`;
+  var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
+  request({ 
+    url: url,
+    method:'GET',
+    // qs:{"screen_name":"BryceCanyonNPS"},
+    json:true,
+    headers: {
+        "Authorization": "Bearer " + bearerToken
+    }
+  }, function(err, resp, body) {
   
-  //     console.dir(body);
+      console.dir(body);
   
-  // })
+  })
   // .then( () => {
   //   // res.render('parks', { natParks }) 
   //   // res.render('park-details', { park });
