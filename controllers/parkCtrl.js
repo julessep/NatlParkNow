@@ -26,27 +26,18 @@ module.exports.getParks = (req, res, next) => {
   }); 
 };
 
-let onePark =[]
+let parkDetails = []
 module.exports.getSinglePark = (req, res, next) => {
     const { Park, Handle } = req.app.get('models');
     let currentPark = req.params.id;
-    Handle.findOne({where: {parkId: currentPark}, include: [{model: Park}]})
+    Handle.findOne({where: {parkId: currentPark}, include: {model: Park}})
     .then( (data) => {
-      console.log(data);
-       let twitterHandle = data.screenName;
-       console.log("twitterHandle", twitterHandle)
+      let park = data;
+      parkDetails.push(park)
+      // console.log("Access park details", parkDetails[0].Park.fullName);
+      //  console.log("twitter handle", parkDetails[0].screenName) //logs twitter handle
+      getTweets(parkDetails)
     })
-    // .then(singlePark => {
-    //   let park = singlePark[0];
-    //   onePark.push(park)
-    //   console.log(onePark)
-      // res.render('park-details', { park });
-      // getTweets(req,res, next)
-      // twitterQ(onePark)
-    // })
-    // .then( park => {
-    //   console.log(park)
-    // })
     .catch(err => {
       next(err);
     });
@@ -59,23 +50,26 @@ module.exports.getSinglePark = (req, res, next) => {
 //   return codeURL
 // }
 let getTweets = (req, res, next) => {
-  // console.log(onePark[0])
-  let parkFullName = onePark[0].fullName; //
-  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${parkFullName}`;
-  var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
-  request({ 
-    url: url,
-    method:'GET',
-    // qs:{"screen_name":"BryceCanyonNPS"},
-    json:true,
-    headers: {
-        "Authorization": "Bearer " + bearerToken
-    }
-  }, function(err, resp, body) {
+  console.log("run getTweets");
+  // console.log("Access park details", parkDetails[0].Park.fullName);
+  //  console.log("twitter handle", parkDetails[0].screenName);
+
+  // let parkFullName = onePark[0].fullName; //
+  // var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${parkFullName}`;
+  // var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
+  // request({ 
+  //   url: url,
+  //   method:'GET',
+  //   // qs:{"screen_name":"BryceCanyonNPS"},
+  //   json:true,
+  //   headers: {
+  //       "Authorization": "Bearer " + bearerToken
+  //   }
+  // }, function(err, resp, body) {
   
-      console.dir(body);
+  //     console.dir(body);
   
-  })
+  // })
   // .then( () => {
   //   // res.render('parks', { natParks }) 
   //   // res.render('park-details', { park });

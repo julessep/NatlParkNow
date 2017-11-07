@@ -18,30 +18,8 @@ module.exports.extractParks = (req, res, next) => {
       let obj = {}
       obj.allParks = allParks
       console.log(obj)
-      let json = JSON.stringify(obj, null, 4)
-      fs.writeFile('allParks.json', json, 'utf-8');
-      // const { Park } = req.app.get('models');
-      // for(var i = 0; i < allParks.length; i++) { //loops over each park oject for inserting into Park table
-      //   let savePark = {
-      //     fullName: allParks[i].fullName,
-      //     name: allParks[i].name,
-      //     parkCode: allParks[i].parkCode,
-      //     description: allParks[i].description,
-      //     states: allParks[i].states,
-      //     weatherInfo: allParks[i].weatherInfo,
-      //     url: allParks[i].url
-      //   }
-        // console.log(allParks)
-        // Park.create(savePark)
-  // console.log("Park data saved!")
-  
-        // .then( () => {
-        //   console.log("Park data saved!")
-        // })
-        // .catch( (err) => {
-        //   next(err);
-        // }); 
-      // }
+      let json = JSON.stringify(obj, null, 4) // makes it in readable json format 
+      fs.writeFile('allParks.json', json, 'utf-8'); // saves national park data to json file
     }
   })
 }
