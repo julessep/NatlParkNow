@@ -1,3 +1,7 @@
 body {
   margin: 0;
   background-color: #bada55; }
+
+li {
+  text-decoration: none;
+  list-style: none; }
