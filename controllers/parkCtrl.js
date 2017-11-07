@@ -58,7 +58,7 @@ let getTweets = (req, res, next) => {
   let screen_name = parkDetails[0].screenName; //
   console.log("SCREEN NAME", screen_name)
   // var url = `https://api.twitter.com/1.1/search/tweets.json?q=%40${screen_name}&count=25`;
-  let url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}&count=1&include_entities=1`;
+  let url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}&count=7&include_entities=1`;
 
   var tweetsInfo = {
     uri: url,
@@ -69,8 +69,8 @@ let getTweets = (req, res, next) => {
     json: true
   };
   rp(tweetsInfo)
-  .then(function (tweets) {
-      console.log("???????????", tweets.statuses);
+  .then(function (body) {
+      console.log("TWEET DATA", body.statuses[1].entities.media[0].media_url_https);
   })
   .catch(function (err) {
     console.log(err)
