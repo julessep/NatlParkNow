@@ -11,6 +11,16 @@ module.exports = (sequelize, DataTypes) => {
   }, {timestamps: false});
 
   Park.associate = function(models) {
+    Park.belongsToMany(models.User, {
+      through: 'UserFavorites',
+      onDelete: 'CASCADE'
+    });
+  };
+
+  Park.associate = function(models) {
+    Park.belongsTo(models.Handle, {
+      foreignKey: "screenName"
+    });
   };
 
   return Park;

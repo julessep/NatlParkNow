@@ -8,7 +8,7 @@ var session = require('express-session');
 let bodyParser = require('body-parser');
 const flash = require('express-flash');
 var request = require('request');
-// const bearerToken = require('./controllers/createBearerToken')
+const {extractParks} = require('./populate-parks');
 
 const port = process.env.PORT || 4000;
 const parkAPI = process.env.PARK_API;
@@ -21,7 +21,7 @@ app.set('models', require('./models'));
 app.set('view engine', 'pug');
 
 let routes = require('./routes/');
-
+app.use('/public', express.static(__dirname + '/static'));
 // Begin middleware stack
 // Inject session persistence into middleware stack
 app.use(session({
@@ -45,11 +45,6 @@ app.use( (req, res, next) => {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(flash());
-
-// app.use( (req, res, next) => {
-//   bearerToken()
-//   next()
-// });
 
 app.use(routes);
 
