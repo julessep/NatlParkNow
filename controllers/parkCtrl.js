@@ -54,8 +54,10 @@ let getTweets = (req, res, next) => {
   // console.log("Access park details", parkDetails[0].Park.fullName);
   //  console.log("twitter handle", parkDetails[0].screenName);
   let screen_name = parkDetails[0].screenName; //
-  var uri = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}&filter:media`;
-  var url = (encodeURI(uri));
+  // var url = `https://api.twitter.com/1.1/search/tweets.json?q=%40${screen_name}`;
+  // var parkPics = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}`//gets all the tweets back from the twitter handle with the screen name and posted by the screen name
+  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}`;//gets tweets that reference the screen name eg fabios trip to the park
+  // var url = (encodeURI(uri));
   
   var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
   request({ 
@@ -71,16 +73,16 @@ let getTweets = (req, res, next) => {
       console.dir(body);
   
   })
-  .then( () => {
-    // res.render('parks', { natParks }) 
-    // res.render('park-details', { park });
-    console.log(tweetinfo)
-    // module.exports.getSinglePark(req, res, next)
+  // .then( () => {
+  //   // res.render('parks', { natParks }) 
+  //   // res.render('park-details', { park });
+  //   console.log("TWEETS", tweetinfo)
+  //   // module.exports.getSinglePark(req, res, next)
 
-    })
-    .catch( (err) => {
-      next(err);
-    }); 
+  //   })
+  //   .catch( (err) => {
+  //     next(err);
+  //   }); 
 }
 
 // adds park to favorites table in db
