@@ -11,6 +11,9 @@ module.exports = {
       fullName: {
         type: Sequelize.STRING
       },
+      screenName: {
+        type: Sequelize.STRING
+      },
       name: {
         type: Sequelize.STRING
       },
