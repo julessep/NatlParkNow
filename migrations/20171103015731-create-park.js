@@ -8,29 +8,38 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      fullName: {
+      states: {
         type: Sequelize.STRING
       },
-      screenName: {
-        type: Sequelize.STRING
-      },
-      name: {
-        type: Sequelize.STRING
-      },
-      parkCode: {
+      latLong: {
         type: Sequelize.STRING
       },
       description: {
         type: Sequelize.TEXT
       },
-      states: {
+      designation: {
+        type: Sequelize.TEXT
+      },
+      parkCode: {
         type: Sequelize.STRING
+      },
+      directionsInfo: {
+        type: Sequelize.TEXT
+      },
+      directionsUrl: {
+        type: Sequelize.STRING
+      },
+      fullName: {
+        type: Sequelize.STRING
+      },
+      url: {
+        type: Sequelize.STRING        
       },
       weatherInfo: {
         type: Sequelize.TEXT
       },
-      url: {
-        type: Sequelize.STRING        
+      name: {
+        type: Sequelize.STRING
       }
     });
   },
