@@ -7,9 +7,11 @@ module.exports = {
         autoIncrement: true,
         type: Sequelize.INTEGER
       },
+      parkId: {
+        autoIncrement: true,
+        type: Sequelize.INTEGER
+      },
       screenName: {
-        allowNull: false,
-        primaryKey: true,
         type: Sequelize.STRING
       },
       parkCode: {

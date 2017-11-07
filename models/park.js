@@ -1,13 +1,17 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Park = sequelize.define('Park', {
-    fullName: DataTypes.STRING,
-    name: DataTypes.STRING,
-    parkCode: DataTypes.STRING,
-    description: DataTypes.TEXT,
     states: DataTypes.STRING,
+    latLong: DataTypes.STRING,
+    description: DataTypes.TEXT,
+    designation: DataTypes.STRING,
+    parkCode: DataTypes.STRING,
+    directionsInfo: DataTypes.STRING,
+    directionsUrl: DataTypes.STRING,
+    fullName: DataTypes.STRING,
+    url: DataTypes.STRING,
     weatherInfo: DataTypes.TEXT,
-    url: DataTypes.STRING
+    name: DataTypes.STRING
   }, {timestamps: false});
 
   Park.associate = function(models) {
@@ -18,8 +22,8 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   Park.associate = function(models) {
-    Park.belongsTo(models.Handle, {
-      foreignKey: "screenName"
+    Park.hasMany(models.Handle, {
+      foreignKey: "parkId"
     });
   };
 
