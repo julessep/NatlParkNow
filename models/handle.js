@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Handle.associate = function(models) {
     Handle.belongsTo(models.Park, {
-      foreignKey: 'parkId',
+      foreignKey: "parkId",
       onDelete: 'CASCADE'
     });
   };

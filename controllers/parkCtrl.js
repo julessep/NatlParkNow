@@ -1,57 +1,46 @@
 var fs = require('fs');
 var express = require('express');
 var request = require('request');
-// var rp = require('request-promise-native');
 require('dotenv').config();
 const parkAPI = process.env.PARK_API;
 var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
+let natParks = [];
 
 // gets information of all parks
 module.exports.getParks = (req, res, next) => {
-    const { Park } = req.app.get('models');
-    Park.findAll({
-      order: ['states']
-    })
-    .then( (parkData) => {
-      if (parkData[0]) { //checks if there's any information in Park table
-        for(var i = 0; i < parkData.length; i++) {
-          natParks.push(parkData[i])// adds all park info to array
-      } 
-    } else {
-      extractParks(res,res,next)
-    }
+  const { Park } = req.app.get('models');
+  Park.findAll({
+    order: ['states']
   })
-  .then( () => {
-    res.render('parks', { natParks }) 
-    // getTweets(req,res, next)   
+  .then( (parkData) => {
+      for(var i = 0; i < parkData.length; i++) {
+        natParks.push(parkData[i])// adds all park info to array
+      } 
+    })
+    .then( () => {
+      res.render('parks', { natParks }) 
+      return natParks;
   })
   .catch( (err) => {
     next(err);
   }); 
 };
 
-let onePark =[]
+let parkDetails = []
 module.exports.getSinglePark = (req, res, next) => {
-  // return new Promise ( (resolve, reject) => {
-    const { Park } = req.app.get('models');
+    const { Park, Handle } = req.app.get('models');
     let currentPark = req.params.id;
-    Park.findAll({
-      where: { id: currentPark }
+    Handle.findOne({where: {parkId: currentPark}, include: {model: Park}})
+    .then( (data) => {
+      let park = data;
+      parkDetails.push(park)
+      // console.log("Access park details", parkDetails[0].Park.fullName);
+      //  console.log("twitter handle", parkDetails[0].screenName) //logs twitter handle
+      getTweets(parkDetails)
     })
-    .then(singlePark => {
-      let park = singlePark[0];
-      onePark.push(park)
-      // res.render('park-details', { park });
-      // getTweets(req,res, next)
-      twitterQ(onePark)
-    })
-    // .then( park => {
-    //   console.log("PARKKKKKK", park)
-    // })
     .catch(err => {
       next(err);
     });
-// })
 };
 // encode string 
 // let twitterQ = (onePark) => {
@@ -61,9 +50,11 @@ module.exports.getSinglePark = (req, res, next) => {
 //   return codeURL
 // }
 let getTweets = (req, res, next) => {
-  // console.log(onePark[0])
-  let parkFullName = onePark[0].fullName; //
-  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${parkFullName}`;
+  console.log("run getTweets");
+  // console.log("Access park details", parkDetails[0].Park.fullName);
+  //  console.log("twitter handle", parkDetails[0].screenName);
+  let screen_name = parkDetails[0].screenName; //
+  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}`;
   var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
   request({ 
     url: url,
