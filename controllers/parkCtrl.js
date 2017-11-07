@@ -32,28 +32,35 @@ module.exports.getSinglePark = (req, res, next) => {
     let currentPark = req.params.id;
     Handle.findOne({where: {parkId: currentPark}, include: {model: Park}})
     .then( (data) => {
-      console.log(data)
-      let park = data.Park;
+      // console.log(data)
+      let park = data;
       parkDetails.push(park)
       // console.log("Access park details", parkDetails[0].Park.fullName);
       //  console.log("twitter handle", parkDetails[0].screenName) //logs twitter handle
-      // getTweets(parkDetails)
       res.render('park-details', { park })
+      let photoUrl = getTweets(parkDetails)
+      console.log(photoUrl)
     })
     .catch(err => {
       next(err);
     });
 };
 
+
 let getTweets = (req, res, next) => {
+  // console.log(req)
+  let photo;
   console.log("run getTweets");
   // console.log("Access park details", parkDetails[0].Park.fullName);
   //  console.log("twitter handle", parkDetails[0].screenName);
+  // console.log("PARK DETAILS", parkDetails)
   let screen_name = parkDetails[0].screenName; //
+  // console.log("SCREEN NAME", screen_name)
   // var url = `https://api.twitter.com/1.1/search/tweets.json?q=%40${screen_name}&count=25`;
-  var url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}&count=25`//gets all the tweets back from the twitter handle with the screen name and posted by the screen name
+  var url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}&count=1&include_entities=1`//gets all the tweets back from the twitter handle with the screen name and posted by the screen name
   // var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}`;//gets tweets that reference the screen name eg fabios trip to the park
   // var url = (encodeURI(uri));
+  // console.log(url)
   
   var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
   request({ 
@@ -65,20 +72,21 @@ let getTweets = (req, res, next) => {
         "Authorization": "Bearer " + bearerToken
     }
   }, function(err, resp, body) {
-      return body
-      
+
+      // console.log(body.statuses[0].entities.media[0].media_url_https);
+      photo = body.statuses[0].entities.media[0].media_url_https;
     })
-    // console.log(body);
-  // .then( () => {
+    // next(photo)
+  .then( () => {
+    next(photo)
   //   // res.render('parks', { natParks }) 
   //   // res.render('park-details', { park });
   //   console.log("TWEETS", tweetinfo)
   //   // module.exports.getSinglePark(req, res, next)
-
-  //   })
-  //   .catch( (err) => {
-  //     next(err);
-  //   }); 
+    })
+    .catch( (err) => {
+      next(err);
+    }); 
 }
 
 // adds park to favorites table in db
