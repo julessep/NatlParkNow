@@ -1,29 +1,24 @@
 var fs = require('fs');
 var express = require('express');
 var request = require('request');
-// var rp = require('request-promise-native');
 require('dotenv').config();
 const parkAPI = process.env.PARK_API;
 var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
+let natParks = [];
 
 // gets information of all parks
 module.exports.getParks = (req, res, next) => {
-    const { Park } = req.app.get('models');
-    Park.findAll({
-      order: ['states']
-    })
-    .then( (parkData) => {
-      if (parkData[0]) { //checks if there's any information in Park table
-        for(var i = 0; i < parkData.length; i++) {
-          natParks.push(parkData[i])// adds all park info to array
-      } 
-    } else {
-      extractParks(res,res,next)
-    }
+  const { Park } = req.app.get('models');
+  Park.findAll({
+    order: ['states']
+  })
+  .then( (parkData) => {
+      for(var i = 0; i < parkData.length; i++) {
+        natParks.push(parkData[i])// adds all park info to array
+    } 
   })
   .then( () => {
     res.render('parks', { natParks }) 
-    // getTweets(req,res, next)   
   })
   .catch( (err) => {
     next(err);
