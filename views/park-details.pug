@@ -1,12 +1,14 @@
 extends layout.pug
 block content
-  h1 #{parkDetails.fullName}
+  h1 #{Park.fullName}
   h5 About    
-  p #{parkDetails.description}
+  p #{Park.description}
   h5 Weather  
-  p #{parkDetails.weatherInfo}
+  p #{Park.weatherInfo}
   h5 Location 
-  p #{parkDetails.states}
+  p #{Park.states}
 
+    each photo in mediaUrl
+     p img(src=#{photo})
   //- form(action=`/parks/${park.parkCode}/${park.fullName}`, method="POST")
   //-   button(type="submit") Save to favorites

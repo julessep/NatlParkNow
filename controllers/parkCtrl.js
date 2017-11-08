@@ -35,21 +35,19 @@ module.exports.getSinglePark = (req, res, next) => {
     .then( (data) => {
       park = data;
       getTweets(park)
-      .then( (data) => {
-        console.log("tweet array data", data)
-        res.render('park-details', { park })
+      .then( (mediaUrl) => {
+        // console.log("tweet array data", mediaUrl)
+        // const {dataValues:Park} = park;
+        console.log("PARKU", park.dataValues.Park.fullName)
+        res.render('park-details', { Park, mediaUrl})
       })
     })
-    // .then( (tweetMedia) =>{
-    //     console.log("TWEET MEDIA FROM getTWEETS", tweetMedia)
-    // })
     .catch(err => {
       next(err);
     });
 };
 
 let getTweets = (req, res, next) => {
-  console.log(req)
   let tweetMedia = [];
   let screen_name = park.screenName;
   // var url = `https://api.twitter.com/1.1/search/tweets.json?q=%40${screen_name}%2Bfilter%3Aimages&count=25&include_entities=true&tweet_mode=extended`;
