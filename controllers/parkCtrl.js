@@ -27,18 +27,17 @@ module.exports.getParks = (req, res, next) => {
   }); 
 };
 
-let parkDetails = []
+let park;
 module.exports.getSinglePark = (req, res, next) => {
     const { Park, Handle } = req.app.get('models');
     let currentPark = req.params.id;
     Handle.findOne({where: {parkId: currentPark}, include: {model: Park}})
     .then( (data) => {
-      let park = data;
-      parkDetails.push(park)
-      getTweets(parkDetails)
+      park = data;
+      getTweets(park)
       .then( (data) => {
         console.log("tweet array data", data)
-        // res.render('park-details', { park })
+        res.render('park-details', { park })
       })
     })
     // .then( (tweetMedia) =>{
@@ -50,9 +49,9 @@ module.exports.getSinglePark = (req, res, next) => {
 };
 
 let getTweets = (req, res, next) => {
+  console.log(req)
   let tweetMedia = [];
-  let screen_name = parkDetails[0].screenName;
-  console.log("SCREEN NAME", screen_name)
+  let screen_name = park.screenName;
   // var url = `https://api.twitter.com/1.1/search/tweets.json?q=%40${screen_name}%2Bfilter%3Aimages&count=25&include_entities=true&tweet_mode=extended`;
   let url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}%2Bfilter%3Aimages&count=20&include_entities=true&tweet_mode=extended`;
 
