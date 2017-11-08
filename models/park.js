@@ -27,5 +27,11 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  // Park.associate = function(models) {
+  //   Park.hasMany(models.Hashtag, {
+  //     foreignKey: "parkId"
+  //   });
+  // };
+
   return Park;
 };
