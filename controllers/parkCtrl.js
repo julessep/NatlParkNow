@@ -35,10 +35,8 @@ module.exports.getSinglePark = (req, res, next) => {
     .then( (data) => {
       let park = data;
       parkDetails.push(park)
-      console.log(parkDetails)
       getTweets(parkDetails)
       .then( (data) => {
-
         console.log("tweet array data", data)
         // res.render('park-details', { park })
       })
@@ -52,16 +50,11 @@ module.exports.getSinglePark = (req, res, next) => {
 };
 
 let getTweets = (req, res, next) => {
-  let tweetMedia = []
-  console.log("run getTweets");
-  // tweetMedia.push(parkDetails);
-  // console.log("PARK DETAILS FROM GET PARKS", parkDetails[0].Park)
-  // console.log("TPARK PARK ARRAY", tweetMedia)
-  
+  let tweetMedia = [];
   let screen_name = parkDetails[0].screenName;
   console.log("SCREEN NAME", screen_name)
   // var url = `https://api.twitter.com/1.1/search/tweets.json?q=%40${screen_name}%2Bfilter%3Aimages&count=25&include_entities=true&tweet_mode=extended`;
-  let url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}%2Bfilter%3Aimages&count=7&include_entities=true&tweet_mode=extended`;
+  let url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}%2Bfilter%3Aimages&count=20&include_entities=true&tweet_mode=extended`;
 
   var tweetsInfo = {
     uri: url,
@@ -71,16 +64,18 @@ let getTweets = (req, res, next) => {
     },
     json: true
   };
-  console.log(tweetsInfo)
   return rp(tweetsInfo)
   .then(function (body) {
-      // console.log("TWEET DATA", body.statuses[1].entities.media[0].media_url_https);
-      media = body.statuses[1].entities.media[0].media_url_https;
-      tweetMedia.push(media)
-      console.log("TWEED MEDIA ARRAY", tweetMedia)
-      return tweetMedia;
-      // res.render('parks', { natParks }) 
-      
+      let status = body.statuses;
+      let entries;
+    status.forEach(function(statuses){
+      let newMedia = statuses.entities.media
+      newMedia.forEach(function(data){
+        let mediaUrl = data.media_url_https;
+        tweetMedia.push(mediaUrl);
+      })
+    })
+    return tweetMedia
   })
   .catch(function (err) {
     console.log(err)
