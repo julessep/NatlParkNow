@@ -35,24 +35,29 @@ module.exports.getSinglePark = (req, res, next) => {
     .then( (data) => {
       let park = data;
       parkDetails.push(park)
-      // console.log("Access park details", parkDetails[0].Park.fullName);
-      //  console.log("twitter handle", parkDetails[0].screenName) //logs twitter handle
-      res.render('park-details', { park })
+      console.log(parkDetails)
       getTweets(parkDetails)
-      // console.log(photoUrl)
+      .then( (data) => {
+
+        console.log("tweet array data", data)
+        // res.render('park-details', { park })
+      })
     })
+    // .then( (tweetMedia) =>{
+    //     console.log("TWEET MEDIA FROM getTWEETS", tweetMedia)
+    // })
     .catch(err => {
       next(err);
     });
 };
 
-
 let getTweets = (req, res, next) => {
-  let photo;
+  let tweetMedia = []
   console.log("run getTweets");
-  // console.log("Access park details", parkDetails[0].Park.fullName);
-  //  console.log("twitter handle", parkDetails[0].screenName);
-  // console.log("PARK DETAILS", parkDetails)
+  // tweetMedia.push(parkDetails);
+  // console.log("PARK DETAILS FROM GET PARKS", parkDetails[0].Park)
+  // console.log("TPARK PARK ARRAY", tweetMedia)
+  
   let screen_name = parkDetails[0].screenName;
   console.log("SCREEN NAME", screen_name)
   // var url = `https://api.twitter.com/1.1/search/tweets.json?q=%40${screen_name}%2Bfilter%3Aimages&count=25&include_entities=true&tweet_mode=extended`;
@@ -67,9 +72,15 @@ let getTweets = (req, res, next) => {
     json: true
   };
   console.log(tweetsInfo)
-  rp(tweetsInfo)
+  return rp(tweetsInfo)
   .then(function (body) {
-      console.log("TWEET DATA", body.statuses[1].entities.media[0].media_url_https);
+      // console.log("TWEET DATA", body.statuses[1].entities.media[0].media_url_https);
+      media = body.statuses[1].entities.media[0].media_url_https;
+      tweetMedia.push(media)
+      console.log("TWEED MEDIA ARRAY", tweetMedia)
+      return tweetMedia;
+      // res.render('parks', { natParks }) 
+      
   })
   .catch(function (err) {
     console.log(err)
