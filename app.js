@@ -21,7 +21,7 @@ app.set('models', require('./models'));
 app.set('view engine', 'pug');
 
 let routes = require('./routes/');
-app.use('/public', express.static(__dirname + '/static'));
+app.use(express.static(__dirname + '/public'));
 // Begin middleware stack
 // Inject session persistence into middleware stack
 app.use(session({

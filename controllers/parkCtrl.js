@@ -1,6 +1,7 @@
 var fs = require('fs');
 var express = require('express');
 var request = require('request');
+var rp = require('request-promise')
 require('dotenv').config();
 const parkAPI = process.env.PARK_API;
 var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
@@ -26,59 +27,56 @@ module.exports.getParks = (req, res, next) => {
   }); 
 };
 
-let parkDetails = []
+let park;
 module.exports.getSinglePark = (req, res, next) => {
     const { Park, Handle } = req.app.get('models');
     let currentPark = req.params.id;
     Handle.findOne({where: {parkId: currentPark}, include: {model: Park}})
     .then( (data) => {
-      let park = data;
-      parkDetails.push(park)
-      // console.log("Access park details", parkDetails[0].Park.fullName);
-      //  console.log("twitter handle", parkDetails[0].screenName) //logs twitter handle
-      getTweets(parkDetails)
+      park = data;
+      getTweets(park)
+      .then( (mediaUrl) => {
+        // console.log("tweet array data", mediaUrl)
+        // const {dataValues:Park} = park;
+        console.log("PARKU", park.dataValues.Park.fullName)
+        res.render('park-details', { Park, mediaUrl})
+      })
     })
     .catch(err => {
       next(err);
     });
 };
-// encode string 
-// let twitterQ = (onePark) => {
-//   let parkFullName = onePark[0].fullName; //
-//   codeURL = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" + parkFullName;
-//   console.log(codeURL)
-//   return codeURL
-// }
-let getTweets = (req, res, next) => {
-  console.log("run getTweets");
-  // console.log("Access park details", parkDetails[0].Park.fullName);
-  //  console.log("twitter handle", parkDetails[0].screenName);
-  let screen_name = parkDetails[0].screenName; //
-  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}`;
-  var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
-  request({ 
-    url: url,
-    method:'GET',
-    // qs:{"screen_name":"BryceCanyonNPS"},
-    json:true,
-    headers: {
-        "Authorization": "Bearer " + bearerToken
-    }
-  }, function(err, resp, body) {
-  
-      console.dir(body);
-  
-  })
-  // .then( () => {
-  //   // res.render('parks', { natParks }) 
-  //   // res.render('park-details', { park });
-  //   console.log(tweetinfo)
-  //   // module.exports.getSinglePark(req, res, next)
 
-  //   })
-  //   .catch( (err) => {
-  //     next(err);
-  //   }); 
+let getTweets = (req, res, next) => {
+  let tweetMedia = [];
+  let screen_name = park.screenName;
+  // var url = `https://api.twitter.com/1.1/search/tweets.json?q=%40${screen_name}%2Bfilter%3Aimages&count=25&include_entities=true&tweet_mode=extended`;
+  let url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}%2Bfilter%3Aimages&count=20&include_entities=true&tweet_mode=extended`;
+
+  var tweetsInfo = {
+    uri: url,
+    headers: {
+      'User-Agent': 'Request-Promise',
+      "Authorization": "Bearer " + bearerToken
+    },
+    json: true
+  };
+  return rp(tweetsInfo)
+  .then(function (body) {
+      let status = body.statuses;
+      let entries;
+    status.forEach(function(statuses){
+      let newMedia = statuses.entities.media
+      newMedia.forEach(function(data){
+        let mediaUrl = data.media_url_https;
+        tweetMedia.push(mediaUrl);
+      })
+    })
+    return tweetMedia
+  })
+  .catch(function (err) {
+    console.log(err)
+  })
 }
 
 // adds park to favorites table in db
