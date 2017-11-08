@@ -51,8 +51,9 @@ module.exports.getSinglePark = (req, res, next) => {
 let getTweets = (req, res, next) => {
   let tweetMedia = [];
   let screen_name = park.screenName;
+  console.log("SCREEN_NAME", screen_name)
   // let url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}%2Bfilter%3Aimages&count=50&include_entities=true&tweet_mode=extended`; //WORKING QUERY
-  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=GlacierNPS&filter%3Amedia&count=2&include_entities=true&tweet_mode=extended`;
+  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}&count=2&include_entities=true&tweet_mode=extended`;
 
   var tweetsInfo = {
     uri: url,
@@ -62,20 +63,20 @@ let getTweets = (req, res, next) => {
     },
     json: true
   };
-  console.log("API REQUEST", tweetsInfo)
   return rp(tweetsInfo)
   .then(function (body) {
     // -----> structure: body[0].entities.media[0].media_url_https
-      let twitterData = body;
+    let twitterData = body;
     twitterData.forEach(function(statuses){
-      let newMedia = statuses.entities.media
-      newMedia.forEach(function(data){
-        let mediaUrl = data.media_url_https;
-        tweetMedia.push(mediaUrl);
-      })
+      let entitiesArr = statuses.entities
+      console.log("ENTITIES ARRAY", entitiesArr)
+      // newMedia.forEach(function(data){
+      //   let mediaUrl = data.media_url_https;
+      //   tweetMedia.push(mediaUrl);
+      // })
     })
-    console.log("TWEET MEDIA ARRAY", tweetMedia)
-    return tweetMedia
+  //   console.log("TWEET MEDIA ARRAY", tweetMedia)
+    // return tweetMedia
   })
   .catch(function (err) {
     console.log(err)
