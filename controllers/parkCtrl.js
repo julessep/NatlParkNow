@@ -36,10 +36,9 @@ module.exports.getSinglePark = (req, res, next) => {
       park = data;
       getTweets(park)
       .then( (mediaUrl) => {
-        // console.log("tweet array data", mediaUrl)
-        // const {dataValues:Park} = park;
-        console.log("PARKU", park.dataValues.Park.fullName)
-        res.render('park-details', { Park, mediaUrl})
+        const {dataValues:Park} = park;
+        data = park.dataValues.Park;
+        res.render('park-details', { data , mediaUrl})
       })
     })
     .catch(err => {
@@ -64,9 +63,11 @@ let getTweets = (req, res, next) => {
   return rp(tweetsInfo)
   .then(function (body) {
       let status = body.statuses;
+      console.log("STATUS". status)
       let entries;
     status.forEach(function(statuses){
       let newMedia = statuses.entities.media
+      // console.log("NEW MEDIA", newMedia)
       newMedia.forEach(function(data){
         let mediaUrl = data.media_url_https;
         tweetMedia.push(mediaUrl);
