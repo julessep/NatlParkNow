@@ -51,7 +51,6 @@ module.exports.getSinglePark = (req, res, next) => {
 let getTweets = (req, res, next) => {
   let tweetMedia = [];
   let screen_name = park.screenName;
-  console.log("PARK FULL NAME", park.Park.fullName)
   // let url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}%2Bfilter%3Aimages&count=50&include_entities=true&tweet_mode=extended`; //WORKING QUERY
   var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=GlacierNPS&filter%3Amedia&count=2&include_entities=true&tweet_mode=extended`;
 
@@ -66,22 +65,17 @@ let getTweets = (req, res, next) => {
   console.log("API REQUEST", tweetsInfo)
   return rp(tweetsInfo)
   .then(function (body) {
-    console.log("TWEET DATA", body)
-    // -----> access to url: body[0].entities.media[0].media_url_https
+    // -----> structure: body[0].entities.media[0].media_url_https
       let twitterData = body;
-
-      // console.log("STATUS", twitterData)
-    // twitterData.forEach(function(statuses){
-    //   console.log("STATUSES", statuses)
-    //   let newMedia = statuses.entities
-    //   console.log("NEW MEDIA", newMedia)
-    // //   newMedia.forEach(function(data){
-    // //     let mediaUrl = data.media_url_https;
-    // //     tweetMedia.push(mediaUrl);
-    // //   })
-    // })
-    // console.log("TWEET MEDIA ARRAY", tweet)
-    return twitterData
+    twitterData.forEach(function(statuses){
+      let newMedia = statuses.entities.media
+      newMedia.forEach(function(data){
+        let mediaUrl = data.media_url_https;
+        tweetMedia.push(mediaUrl);
+      })
+    })
+    console.log("TWEET MEDIA ARRAY", tweetMedia)
+    return tweetMedia
   })
   .catch(function (err) {
     console.log(err)
