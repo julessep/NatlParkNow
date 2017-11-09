@@ -8,7 +8,7 @@ block content
   h5 Location 
   p #{data.states}
 
-  each photo in mediaUrl
+  each photo in mediaUrlArr
     img(src=photo)
   //- form(action=`/parks/${park.parkCode}/${park.fullName}`, method="POST")
   //-   button(type="submit") Save to favorites

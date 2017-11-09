@@ -1,9 +1,9 @@
 var fs = require('fs');
 var express = require('express');
 var request = require('request');
-var rp = require('request-promise')
+var rp = require('request-promise') 
 require('dotenv').config();
-const parkAPI = process.env.PARK_API;
+const parkAPI = process.env.PARK_API; //NPS API key
 var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
 let natParks = [];
 
@@ -28,18 +28,18 @@ module.exports.getParks = (req, res, next) => {
 };
 
 let park;
+// gets park details for a single park
 module.exports.getSinglePark = (req, res, next) => {
     const { Park, Handle } = req.app.get('models');
     let currentPark = req.params.id;
-    Handle.findOne({where: {parkId: currentPark}, include: {model: Park}})
+    Handle.findOne({where: {parkId: currentPark}, include: {model: Park}}) 
     .then( (data) => {
-      park = data;
-      getTweets(park)
-      // getParkHashtag(park)
+      park = data; //gets Park and Handle data from database
+      getTweets(park) 
       .then( (mediaUrlArr) => {
         const {dataValues:Park} = park;
         data = park.dataValues.Park;
-        // res.render('park-details', { data , mediaUrl})
+        res.render('park-details', { data , mediaUrlArr})
         // res.json(mediaUrlArr)
       })
     })
@@ -48,29 +48,29 @@ module.exports.getSinglePark = (req, res, next) => {
     });
 };
 
+// gets tweets from the Twitter API
 let getTweets = (req, res, next) => {
   let mediaUrlArr = [];
   let screen_name = park.screenName;
-  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}&count=100&include_entities=true&tweet_mode=extended`;
-
-  var tweetsInfo = {
+  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}&count=200&include_entities=true&tweet_mode=extended`; //gets latest 200 tweets from users timeline
+  var tweetsInfo = { 
     uri: url,
-    headers: {
+    headers: {  //set header as per requiered by OAuth for twitter
       'User-Agent': 'Request-Promise',
       "Authorization": "Bearer " + bearerToken
     },
     json: true
   };
-  return rp(tweetsInfo)
+  return rp(tweetsInfo) //using request-promise module
   .then(function (body) { // -----> body[].entities.media[].media_url_https
-    let twitterData = body;
-    twitterData.forEach(function(statuses){
-      let entitiesObj = statuses.entities
-        if(typeof(entitiesObj.media) !== 'undefined'){
-          let filteredMedia = entitiesObj.media;
-            filteredMedia.forEach(function(data){
-              let mediaUrl = data.media_url_https;
-              mediaUrlArr.push(mediaUrl);
+    let timelineData = body;
+    timelineData.forEach(function(tweet){ //iterate over tweets to get the url for each photo 
+      let entitiesObj = tweet.entities
+        if(typeof(entitiesObj.media) !== 'undefined'){ //if entities has a property of media, add it to an array
+          let mediaArray = entitiesObj.media;
+            mediaArray.forEach(function(url){
+              let mediaUrl = url.media_url_https;
+              mediaUrlArr.push(mediaUrl); 
             })
         } else {
           console.log("no media property")
