@@ -14,5 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  Favorite.associate = function(models) {
+    Favorite.belongsTo(models.Park, {
+      foreignKey: 'parkId',
+      onDelete: 'CASCADE'
+    });
+  };
+
   return Favorite;
 };

@@ -37,14 +37,11 @@ module.exports.getSinglePark = (req, res, next) => {
       park = data; //gets Park and Handle data from database
       let parkCode = park;
       console.log("PARK", park.parkCode)
-      // module.exports.savePark(req, res, next, parkCode);
-      // getParkAPI(req, res, next, parkCode)
       getTweets(park) 
       .then( (mediaUrlArr) => {
         const {dataValues:Park} = park;
         data = park.dataValues.Park;
         res.render('park-details', { data , mediaUrlArr})
-        // res.json(mediaUrlArr)
       })
     })
     .catch(err => {

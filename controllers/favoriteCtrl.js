@@ -3,6 +3,7 @@ var request = require('request');
 require('dotenv').config();
 const parkAPI = process.env.PARK_API;
 
+// gets users favorite parks from db
 module.exports.getFavorites = (req, res, next) => {
   const { Favorite } = req.app.get('models');
   Favorite.findAll()
