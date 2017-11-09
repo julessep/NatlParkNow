@@ -35,6 +35,10 @@ module.exports.getSinglePark = (req, res, next) => {
     Handle.findOne({where: {parkId: currentPark}, include: {model: Park}}) 
     .then( (data) => {
       park = data; //gets Park and Handle data from database
+      let parkCode = park;
+      console.log("PARK", park.parkCode)
+      // module.exports.savePark(req, res, next, parkCode);
+      // getParkAPI(req, res, next, parkCode)
       getTweets(park) 
       .then( (mediaUrlArr) => {
         const {dataValues:Park} = park;
@@ -73,10 +77,9 @@ let getTweets = (req, res, next) => {
               mediaUrlArr.push(mediaUrl); 
             })
         } else {
-          console.log("no media property")
+          // console.log("no media property")
         }
     })
-    console.log("mediaUrlArr", mediaUrlArr)
     return mediaUrlArr
   })
   .catch(function (err) {
@@ -84,10 +87,24 @@ let getTweets = (req, res, next) => {
   })
 }
 
+let getParkAPI = (req, res, next, parkCode) => {
+  // let parkCode = req.params.parkCode;
+  console.log("params", parkCode)
+  request.get(`https://developer.nps.gov/api/v1/parks?parkCode=${parkCode}&api_key=${parkAPI}`, (err, response, body) => {
+  if (!err && response.statusCode == 200) {
+        var park = JSON.parse(body).data;
+        res.render('park-details', {park});
+        console.log("park obj", park)
+     }
+   })
+ }
+
 // adds park to favorites table in db
-module.exports.savePark = (req, res, next) => {
-  let currentPark = req.params.parkCode;
-  let parkName = req.params.fullName;
+module.exports.savePark = (req, res, next, park) => {
+  let currentPark = park.parkCode;
+  let parkName = park.fullName;
+  let user = req.session.passport.user.id;
+  console.log("USER", user)
   const { Favorite } = req.app.get('models');
   let saveFavorite = {
     userId: req.session.passport.user.id,

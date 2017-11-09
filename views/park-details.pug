@@ -7,8 +7,9 @@ block content
   p #{data.weatherInfo}
   h5 Location 
   p #{data.states}
+  
+  form(action=`/parks/${data.id}/${data.parkCode}`, method="POST")
+    button(type="submit") Save to favorites
 
   each photo in mediaUrlArr
     img(src=photo)
-  //- form(action=`/parks/${park.parkCode}/${park.fullName}`, method="POST")
-  //-   button(type="submit") Save to favorites

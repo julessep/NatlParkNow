@@ -14,3 +14,5 @@ module.exports.getFavorites = (req, res, next) => {
     next(err); 
   });
 };
+
+// gets one park from API

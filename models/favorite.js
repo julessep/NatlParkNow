@@ -6,12 +6,12 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING
   }, {timestamps: false});
 
-  Favorite.associate = function(models) {
-    Favorite.belongsTo(models.User, {
-      foreignKey: 'userId',
-      onDelete: 'CASCADE'
-    });
-  };
+  // Favorite.associate = function(models) {
+  //   Favorite.belongsTo(models.User, {
+  //     foreignKey: 'userId',
+  //     onDelete: 'CASCADE'
+  //   });
+  // };
 
   return Favorite;
 };
