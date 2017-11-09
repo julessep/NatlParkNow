@@ -33,19 +33,14 @@ module.exports.getSinglePark = (req, res, next) => {
     let currentPark = req.params.id;
     Handle.findOne({where: {parkId: currentPark}, include: {model: Park}})
     .then( (data) => {
-      park = data.screenName;
-      // getTweets(park)
-      // res.json(data.screenName)
-  
-      let allMediaArr = getTweets(req, res, next, park)
+      park = data;
+      getTweets(park)
       // getParkHashtag(park)
-      res.json(allMediaArr)
-      
-      .then( (mediaUrl) => {
+      .then( (mediaUrlArr) => {
         const {dataValues:Park} = park;
         data = park.dataValues.Park;
         // res.render('park-details', { data , mediaUrl})
-        // res.json(mediaUrl)
+        // res.json(mediaUrlArr)
       })
     })
     .catch(err => {
@@ -53,14 +48,10 @@ module.exports.getSinglePark = (req, res, next) => {
     });
 };
 
-let getTweets = (req, res, next, park) => {
-  // let tweetMedia = [];
-  let mediaArr = [];
-  console.log("PARK", park)
+let getTweets = (req, res, next) => {
+  let mediaUrlArr = [];
   let screen_name = park.screenName;
-
-  // let url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}%2Bfilter%3Aimages&count=50&include_entities=true&tweet_mode=extended`; //WORKING QUERY
-  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}&count=15&include_entities=true&tweet_mode=extended`;
+  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}&count=100&include_entities=true&tweet_mode=extended`;
 
   var tweetsInfo = {
     uri: url,
@@ -71,64 +62,27 @@ let getTweets = (req, res, next, park) => {
     json: true
   };
   return rp(tweetsInfo)
-  .then(function (body) {
-    // -----> structure: body[0].entities.media[0].media_url_https
+  .then(function (body) { // -----> body[].entities.media[].media_url_https
     let twitterData = body;
     twitterData.forEach(function(statuses){
       let entitiesObj = statuses.entities
-      // return entitiesObj;
-      // console.log("ENTITIES ARRAY", entitiesObj)
-      // entitiesObj.forEach(function(data){
-        if(typeof(entitiesObj.media) !== undefined){
-          mediaArr.push(entitiesObj);
-          console.log("WITH MEDIA", mediaArr)
-        }else{
-          console.log("NO MEDIA")
+        if(typeof(entitiesObj.media) !== 'undefined'){
+          let filteredMedia = entitiesObj.media;
+            filteredMedia.forEach(function(data){
+              let mediaUrl = data.media_url_https;
+              mediaUrlArr.push(mediaUrl);
+            })
+        } else {
+          console.log("no media property")
         }
-      // })
     })
-    console.log("MEDIA ARR", mediaArr)
-    return mediaArr
+    console.log("mediaUrlArr", mediaUrlArr)
+    return mediaUrlArr
   })
   .catch(function (err) {
     console.log(err)
   })
 }
-
-// let getParkHashtag = (req, res, next) => {
-//   let tweetMedia = [];
-//   let screen_name = park.screenName;
-//   console.log("PARK FULL NAME", park.Park.fullName)
-//   // var url = `https://api.twitter.com/1.1/search/tweets.json?q=%40${screen_name}%2Bfilter%3Aimages&count=25&include_entities=true&tweet_mode=extended`;
-//   let url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}%2Bfilter%3Aimages&count=50&include_entities=true&tweet_mode=extended`;
-
-//   var tweetsInfo = {
-//     uri: url,
-//     headers: {
-//       'User-Agent': 'Request-Promise',
-//       "Authorization": "Bearer " + bearerToken
-//     },
-//     json: true
-//   };
-//   return rp(tweetsInfo)
-//   .then(function (body) {
-//       let status = body.statuses;
-//       // console.log("STATUS". status)
-//       // let entries;
-//     status.forEach(function(statuses){
-//       let newMedia = statuses.entities.media
-//       // console.log("NEW MEDIA", newMedia)
-//       newMedia.forEach(function(data){
-//         let mediaUrl = data.media_url_https;
-//         tweetMedia.push(mediaUrl);
-//       })
-//     })
-//     return tweetMedia
-//   })
-//   .catch(function (err) {
-//     console.log(err)
-//   })
-// }
 
 // adds park to favorites table in db
 module.exports.savePark = (req, res, next) => {
