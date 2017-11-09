@@ -1,10 +1,26 @@
 body {
   margin: 0;
-  background-color: #bada55; }
+  background-color: white; }
 
 li {
   text-decoration: none;
   list-style: none; }
+
+a {
+  color: black; }
+
+a:hover {
+  color: forestgreen;
+  text-decoration: none; }
+
+.offset-left {
+  margin-left: 22%; }
+
+.top-margin {
+  margin-top: 2%; }
+
+img {
+  border-radius: 3px; }
 
 div.card {
   padding: 0; }

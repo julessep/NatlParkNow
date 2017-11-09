@@ -1,6 +1,6 @@
 extends layout.pug
 block content
-  h1 #{data.fullName}
+  h1(class="text-center") #{data.fullName}
   h5 About    
   p #{data.description}
   h5 Weather  
@@ -9,9 +9,9 @@ block content
   p #{data.states}
   
   form(action=`/parks/${data.id}/${data.fullName}`, method="POST")
-    button(type="submit") Save to favorites
+    button(class="btn" type="submit") Save to favorites
 
-  div(class="card-columns")
+  div(class="card-columns top-margin")
     each photo in mediaUrlArr
       div(class="card card-block col-12 h-100 no-padding")
         img(class="col-12 no-padding" src=`${photo}`)

@@ -53,7 +53,7 @@ module.exports.getSinglePark = (req, res, next) => {
 let getTweets = (req, res, next) => {
   let mediaUrlArr = [];
   let screen_name = park.screenName;
-  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}&count=100&include_entities=true&tweet_mode=extended`; //gets latest 200 tweets from users timeline
+  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}&count=200&include_entities=true&tweet_mode=extended`; //gets latest 200 tweets from users timeline
   var tweetsInfo = { 
     uri: url,
     headers: {  //set header as per requiered by OAuth for twitter
