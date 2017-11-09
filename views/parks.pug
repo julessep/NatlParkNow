@@ -4,5 +4,5 @@ block content
     ul
       each park in natParks  
         li
-        -let url = `/parks/` + park.id
+        -let url = `/parks/` + park.id + `/`
         a(href=url) #{park.fullName} 
