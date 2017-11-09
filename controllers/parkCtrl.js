@@ -6,7 +6,6 @@ require('dotenv').config();
 const parkAPI = process.env.PARK_API; //NPS API key
 var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
 let natParks = [];
-let statesArr = [];
 let parkState = {};
 
 let sortedParks = {
@@ -60,7 +59,7 @@ module.exports.getParks = (req, res, next) => {
     console.log("SORTED PARKS", sortedParks)
     })
     .then( () => {
-      res.render('parks', { natParks, statesArr }) 
+      res.render('parks', { sortedParks }) 
       return natParks;
   })
   .catch( (err) => {
