@@ -1,8 +1,8 @@
 extends layout.pug
 block content
-  h1 parks
-    ul
+  h1
+    ul(class="offset-left")
       each park in natParks  
         li
         -let url = `/parks/` + park.id + `/`
-        a(href=url) #{park.fullName} 
+        a(class="text-center" href=url) #{park.fullName} 

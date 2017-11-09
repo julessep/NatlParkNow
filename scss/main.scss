@@ -2,7 +2,7 @@ $badass: #bada55;
 
 body { 
   margin: 0; 
-  background-color: $badass; 
+  background-color: white; 
 }
 
 li {
@@ -10,8 +10,37 @@ li {
   list-style: none;
 }
 
+a {
+  color: black
+}
+
+a:hover {
+  color: forestgreen;
+  text-decoration: none;
+}
+.offset-left {
+  margin-left: 22%;
+  // margin-right: 15%;
+}
+
+.top-margin {
+  margin-top: 2%;
+}
+img {
+  border-radius: 3px;
+}
+div.card {
+  padding: 0;
+}
+img {
+  padding: 0;
+}
 .twitterPhotos {
   height: 400px;
   width: auto;
   overflow: hidden;
+}
+.no-padding {
+  padding-right: 0!important;
+  padding-left: 0!important;
 }

@@ -23,6 +23,7 @@
 				"express-validator": "^4.2.1",
 				"jquery": "^3.2.1",
 				"jsdoc": "^3.5.5",
+				"masonry-layout": "^4.2.0",
 				"method-override": "^2.3.10",
 				"mysql2": "^1.4.2",
 				"oauth": "^0.9.15",
