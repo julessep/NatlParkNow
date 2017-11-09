@@ -7,20 +7,57 @@ const parkAPI = process.env.PARK_API; //NPS API key
 var bearerToken = process.env.TWITTER_BEARER_TOKEN; //the bearer token obtained from the last script
 let natParks = [];
 let statesArr = [];
+let parkState = {};
 
+let sortedParks = {
+  'AK': { state:"Alaska", parks: []},
+  'AR': { state:"Arkansas", parks: []},
+  'AZ': { state:"Arizona", parks: []},
+  'CA': { state:"California", parks: []},
+  'CO': { state:"Colorado", parks: []},
+  'FL': { state:"Florida", parks: []},
+  'HI': { state:"Hawaii", parks: []},
+  'ID': { state:"Idaho", parks: []},
+  'KY': { state:"Kentucky", parks: []},
+  'ME': { state:"Maine", parks: []},
+  'MI': { state:"Michigan", parks: []},
+  'MN': { state:"Minnesota", parks: []},
+  'MT': { state:"Montana", parks: []},
+  'NC': { state:"North Carolina", parks: []},
+  'ND': { state:"North Dakota", parks: []},
+  'NM': { state:"New Maexico", parks: []},
+  'NV': { state:"Nevada", parks: []},
+  'OH': { state:"Ohio", parks: []},
+  'OR': { state:"Oregon", parks: []},
+  'SC': { state:"South Carolina", parks: []},
+  'SD': { state:"South Dakota", parks: []},
+  'TX': { state:"Texas", parks: []},
+  'UT': { state:"Utah", parks: []},
+  'VA': { state:"Virginia", parks: []},
+  'VI': { state:"Virgin Islands", parks: []},
+  'WA': { state:"Washington", parks: []},
+  'WY': { state:"Wyoming", parks: []}
+};
 // gets information of all parks
 module.exports.getParks = (req, res, next) => {
   const { Park } = req.app.get('models');
   Park.findAll({
+    raw:true,
     order: ['states']
   })
   .then( (parkData) => {
     for(var i = 0; i < parkData.length; i++) {
       natParks.push(parkData[i])// adds all park info to array
     }
-    natParks.forEach(function(park){ //push states information to array
-      statesArr.push(park.states)
-    })
+    natParks.forEach( (park) => {
+      let obj = {};
+      
+    console.log("PARKS?", sortedParks[park.states.split(',')[0]])
+    
+      sortedParks[park.states.split(',')[0]].parks.push(park);
+
+    });
+    console.log("SORTED PARKS", sortedParks)
     })
     .then( () => {
       res.render('parks', { natParks, statesArr }) 
