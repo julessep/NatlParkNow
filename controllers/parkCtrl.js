@@ -33,14 +33,19 @@ module.exports.getSinglePark = (req, res, next) => {
     let currentPark = req.params.id;
     Handle.findOne({where: {parkId: currentPark}, include: {model: Park}})
     .then( (data) => {
-      park = data;
-      getTweets(park)
+      park = data.screenName;
+      // getTweets(park)
+      // res.json(data.screenName)
+  
+      let allMediaArr = getTweets(req, res, next, park)
       // getParkHashtag(park)
+      res.json(allMediaArr)
+      
       .then( (mediaUrl) => {
         const {dataValues:Park} = park;
         data = park.dataValues.Park;
         // res.render('park-details', { data , mediaUrl})
-        res.json(mediaUrl)
+        // res.json(mediaUrl)
       })
     })
     .catch(err => {
@@ -48,12 +53,14 @@ module.exports.getSinglePark = (req, res, next) => {
     });
 };
 
-let getTweets = (req, res, next) => {
-  let tweetMedia = [];
+let getTweets = (req, res, next, park) => {
+  // let tweetMedia = [];
+  let mediaArr = [];
+  console.log("PARK", park)
   let screen_name = park.screenName;
-  console.log("SCREEN_NAME", screen_name)
+
   // let url = `https://api.twitter.com/1.1/search/tweets.json?q=${screen_name}%2Bfrom%3A${screen_name}%2Bfilter%3Aimages&count=50&include_entities=true&tweet_mode=extended`; //WORKING QUERY
-  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}&count=2&include_entities=true&tweet_mode=extended`;
+  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}&count=15&include_entities=true&tweet_mode=extended`;
 
   var tweetsInfo = {
     uri: url,
@@ -68,15 +75,20 @@ let getTweets = (req, res, next) => {
     // -----> structure: body[0].entities.media[0].media_url_https
     let twitterData = body;
     twitterData.forEach(function(statuses){
-      let entitiesArr = statuses.entities
-      console.log("ENTITIES ARRAY", entitiesArr)
-      // newMedia.forEach(function(data){
-      //   let mediaUrl = data.media_url_https;
-      //   tweetMedia.push(mediaUrl);
+      let entitiesObj = statuses.entities
+      // return entitiesObj;
+      // console.log("ENTITIES ARRAY", entitiesObj)
+      // entitiesObj.forEach(function(data){
+        if(typeof(entitiesObj.media) !== undefined){
+          mediaArr.push(entitiesObj);
+          console.log("WITH MEDIA", mediaArr)
+        }else{
+          console.log("NO MEDIA")
+        }
       // })
     })
-  //   console.log("TWEET MEDIA ARRAY", tweetMedia)
-    // return tweetMedia
+    console.log("MEDIA ARR", mediaArr)
+    return mediaArr
   })
   .catch(function (err) {
     console.log(err)
