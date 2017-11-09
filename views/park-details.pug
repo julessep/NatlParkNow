@@ -9,7 +9,7 @@ block content
   p #{data.states}
   
   form(action=`/parks/${data.id}/${data.fullName}`, method="POST")
-    button(class="btn" type="submit") Save to favorites
+    button(class="btn btn-outline-primary" type="submit") Save to favorites
 
   div(class="card-columns top-margin")
     each photo in mediaUrlArr

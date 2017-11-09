@@ -1,4 +1,13 @@
 $badass: #bada55;
+$mediumbrown: #CE8A56;
+$black: #14171a;
+$lighttan: #F8F0E9;
+$parkgreen: #384e21;
+$lakeblue: #224873;
+$softgreen: #6EA762;
+$whitegrey: #f5f8fa;
+$darkblue: #006dbf;
+$lightblue: #4ab3f4;
 
 body { 
   margin: 0; 
@@ -20,7 +29,6 @@ a:hover {
 }
 .offset-left {
   margin-left: 22%;
-  // margin-right: 15%;
 }
 
 .top-margin {
@@ -36,7 +44,7 @@ img {
   padding: 0;
 }
 .twitterPhotos {
-  height: 400px;
+  height: 500px;
   width: auto;
   overflow: hidden;
 }

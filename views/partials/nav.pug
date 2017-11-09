@@ -1,24 +1,27 @@
-if session.passport
-  span #{session.passport.user.username}
-  form(method="POST")
-    button(type="submit" formaction="/logout") Logout
-  a(href="/favorites") Favorites
-  br
-else if !session.passport
-  button
-    a(href="/login") Login
-a(href="/parks" id="hr") Explore Parks
+//- if session.passport
+//-   span #{session.passport.user.username}
+  //- form(method="POST")
+  //-   button(type="submit" formaction="/logout") Logout
+  //- a(href="/favorites") Favorites
+//-   br
+//- else if !session.passport
+//-   button
+//-     a(href="/login") Login
+//- a(href="/parks" id="hr") Explore Parks
 
-//- nav.navbar.navbar.navbar-expand-lg.fixed-top
-//-   a.navbar-brand.logo(href='#about')
-//-     img.loggo(src='images/sepulvedalogo.png')
-//-   button.navbar-toggler.navbar-toggler-right(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
-//-     i.fa.fa-bars(aria-hidden='true')
-//-   #navbarNav.collapse.navbar-collapse.directory
-//-     ul.navbar-nav.d-inline-flex.justify-content-around
-//-       li.nav-item
-//-         a.nav-item.nav-link.link(href='#projects') PROJECTS
-//-       li.nav-item
-//-         a.nav-item.nav-link.link(href='#technologies') TECHNOLOGIES
-//-       li.nav-item
-//-         a.nav-item.nav-link.link(href='#contact') CONTACT
+nav(class="navbar navbar-expand-lg navbar-light bg-light")
+    //- brand/logo
+    p(class="navbar-brand nav-item") NatlParkNow
+    a(class="btn btn-outline-primary nav-link col-sm" href="/parks" id="hr") Explore Parks
+    div(class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup")
+      if session.passport
+        a(class="nav-link col-sm" href="/favorites") Favorites
+        //- logout button
+        form(method="POST" class="form-inline nav-item")
+          button(class="btn btn-outline-primary" type="submit" formaction="/logout") Logout
+      else if !session.passport
+          div(class="nav-item row")
+              //- login button
+              a(class="btn btn-primary nav-link col-sm" href="/login") Login
+              //- register button
+              a(class="btn btn-info nav-link col-sm" href="/register") Register
