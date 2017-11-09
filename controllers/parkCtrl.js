@@ -56,7 +56,7 @@ module.exports.getSinglePark = (req, res, next) => {
 let getTweets = (req, res, next) => {
   let mediaUrlArr = [];
   let screen_name = park.screenName;
-  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}&count=200&include_entities=true&tweet_mode=extended`; //gets latest 200 tweets from users timeline
+  var url = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${screen_name}&count=100&include_entities=true&tweet_mode=extended`; //gets latest 200 tweets from users timeline
   var tweetsInfo = { 
     uri: url,
     headers: {  //set header as per requiered by OAuth for twitter
@@ -100,16 +100,15 @@ let getParkAPI = (req, res, next, parkCode) => {
  }
 
 // adds park to favorites table in db
-module.exports.savePark = (req, res, next, park) => {
-  let currentPark = park.parkCode;
-  let parkName = park.fullName;
+module.exports.savePark = (req, res, next) => {
+  // let currentPark = req.params.parkCode;
+  let parkName = req.params.fullName;
   let user = req.session.passport.user.id;
   console.log("USER", user)
   const { Favorite } = req.app.get('models');
   let saveFavorite = {
     userId: req.session.passport.user.id,
-    parkCode: currentPark,
-    name: parkName
+    name: parkName,
   }
   Favorite.create(saveFavorite)
   .then( () => {

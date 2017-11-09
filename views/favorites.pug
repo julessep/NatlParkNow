@@ -3,6 +3,6 @@ block content
   h1 Your Favorite Parks!
   ul
     each favorite in favorites
-      -let url = `http://localhost:5000/parks/` + favorite.parkCode
+      -let url = `http://localhost:5000/parks/` + favorite.id
       a(href=url) #{favorite.name}
       br

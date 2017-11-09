@@ -8,8 +8,8 @@ block content
   h5 Location 
   p #{data.states}
   
-  form(action=`/parks/${data.id}/${data.parkCode}`, method="POST")
+  form(action=`/parks/${data.id}/${data.fullName}`, method="POST")
     button(type="submit") Save to favorites
 
   each photo in mediaUrlArr
-    img(src=photo)
+    img.twitterPhotos(src=photo)

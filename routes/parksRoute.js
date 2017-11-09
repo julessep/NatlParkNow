@@ -12,7 +12,7 @@ const {
 
 router.get('/parks', getParks); // gets list of all park names
 router.get('/parks/:id', getSinglePark); // details of a single park
-router.post('/parks/:id/:parkCode', isLoggedIn, savePark); // adds park to favorites table
+router.post('/parks/:id/:fullName', isLoggedIn, savePark); // adds park to favorites table
 
 module.exports = router;
 
