@@ -5,3 +5,18 @@ body {
 li {
   text-decoration: none;
   list-style: none; }
+
+div.card {
+  padding: 0; }
+
+img {
+  padding: 0; }
+
+.twitterPhotos {
+  height: 400px;
+  width: auto;
+  overflow: hidden; }
+
+.no-padding {
+  padding-right: 0 !important;
+  padding-left: 0 !important; }

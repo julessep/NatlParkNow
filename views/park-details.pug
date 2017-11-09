@@ -11,5 +11,7 @@ block content
   form(action=`/parks/${data.id}/${data.fullName}`, method="POST")
     button(type="submit") Save to favorites
 
-  each photo in mediaUrlArr
-    img.twitterPhotos(src=photo)
+  div(class="card-columns")
+    each photo in mediaUrlArr
+      div(class="card card-block col-12 h-100 no-padding")
+        img(class="col-12 no-padding" src=`${photo}`)
