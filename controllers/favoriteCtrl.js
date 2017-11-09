@@ -15,4 +15,3 @@ module.exports.getFavorites = (req, res, next) => {
   });
 };
 
-// gets one park from API

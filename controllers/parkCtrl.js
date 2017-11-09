@@ -101,7 +101,7 @@ let getParkAPI = (req, res, next, parkCode) => {
 
 // adds park to favorites table in db
 module.exports.savePark = (req, res, next) => {
-  // let currentPark = req.params.parkCode;
+  let currentPark = req.params.id;
   let parkName = req.params.fullName;
   let user = req.session.passport.user.id;
   console.log("USER", user)
@@ -109,6 +109,7 @@ module.exports.savePark = (req, res, next) => {
   let saveFavorite = {
     userId: req.session.passport.user.id,
     name: parkName,
+    parkId: currentPark
   }
   Favorite.create(saveFavorite)
   .then( () => {

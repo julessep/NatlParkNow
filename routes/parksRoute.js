@@ -6,7 +6,6 @@ const router = Router();
 const {
   getParks,
   getSinglePark,
-  // getSingleParkAPI,
   savePark
 } = require('../controllers/parkCtrl.js');
 
