@@ -17,6 +17,9 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING
+      },
+      parkId: {
+        type: Sequelize.STRING
       }
     });
   },
