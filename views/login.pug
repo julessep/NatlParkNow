@@ -1,13 +1,16 @@
 extends layout.pug
 block content
-  h1 Login to 
+  h3 Login to view your parks:
   if message
     h2= message
 
-  form(action="/login", method="post")
-    input(type="text" placeholder="username" name="username")
-    input(type="email" placeholder="email" name="email")
-    input(type="password" placeholder="password" name="password")
-    button(type="submit") login
+  form(class="form-inline" action="/login", method="post")
+    div(class="form-group")
+      input(class="form-control" type="text" placeholder="username" name="username")
+    div(class="form-group")    
+      input(class="form-control" type="email" placeholder="email" name="email")
+    div(class="form-group")    
+      input(class="form-control" type="password" placeholder="password" name="password")
+    button(class="btn btn-outline-primary small-margin favorite" type="submit") login
 
   

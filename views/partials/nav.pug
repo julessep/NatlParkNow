@@ -17,9 +17,9 @@ nav(class="navbar navbar-expand-lg")
       if session.passport
         //- button(class="btn btn-primary nav-link" href="/favorites") Favorites
           //- form(method="POST" class="form-inline")
-
         a(class="btn btn-outline-primary button-divide favorite" href="/favorites") Favorites
-        a(class="btn btn-outline-primary button-space logout" href="/logout") Logout
+        form(method="POST")
+          button(class="btn btn-outline-primary button-space logout" type="submit" formaction="/logout") Logout
       else if !session.passport
               //- login button
               a(class="btn btn-primary nav-link button-divide favorite" href="/login") Login

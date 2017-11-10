@@ -37,6 +37,9 @@ img {
   padding-right: 0 !important;
   padding-left: 0 !important; }
 
+.small-margin {
+  margin-left: 2%; }
+
 .explore {
   background-color: #CE8A56;
   border-color: transparent;
@@ -55,7 +58,8 @@ a:hover.explore {
 
 .favorite {
   border-color: #83391e;
-  color: #83391e; }
+  color: #83391e;
+  background-color: transparent; }
 
 a:hover.favorite {
   background-color: #83391e;
@@ -81,6 +85,14 @@ a:hover.logout {
   border-color: #93A644;
   color: white; }
 
+.btn-outline-primary:focus, .btn-outline-primary:focus {
+  box-shadow: none; }
+
+btn-outline-primary:not([disabled]):not(.disabled):active {
+  background-color: #993a22;
+  border-color: #993a22;
+  color: white; }
+
 a:active.logout {
   background-color: #993a22;
   border-color: #993a22;
@@ -95,7 +107,7 @@ a:hover.save-fav {
   border-color: #83391e;
   color: white; }
 
-a.save-fav.btn-outline-primary:not([disabled]):not(.disabled):active {
+btn-outline-primary:not([disabled]):not(.disabled):active {
   background-color: #993a22;
   border-color: #993a22;
   color: white; }

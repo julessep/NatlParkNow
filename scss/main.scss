@@ -59,6 +59,9 @@ img {
   padding-left: 0!important;
 }
 
+.small-margin {
+  margin-left: 2%;
+}
 // -------- NAV ------
 // a.btn.btn-outline-primary.nav-link.col-sm.explore{
 //   margin
@@ -83,6 +86,7 @@ a:hover.explore {
 .favorite {
   border-color: $rustred;
   color: $rustred;
+  background-color: transparent;
 }
 a:hover.favorite {
   background-color: $rustred;  
@@ -108,7 +112,14 @@ a:hover.logout {
   border-color: $meadow;
   color: white;
 }
-
+.btn-outline-primary:focus, .btn-outline-primary:focus {
+  box-shadow: none;
+}
+btn-outline-primary:not([disabled]):not(.disabled):active {
+  background-color: $rustred3;  
+  border-color: $rustred3;
+  color: white;
+}
 a:active.logout {
   background-color: $rustred3;  
   border-color: $rustred3;
@@ -123,7 +134,7 @@ a:hover.save-fav {
   border-color: $rustred;
   color: white;
 }
-a.save-fav.btn-outline-primary:not([disabled]):not(.disabled):active {
+btn-outline-primary:not([disabled]):not(.disabled):active {
   background-color: $rustred3;  
   border-color: $rustred3;
   color: white;
