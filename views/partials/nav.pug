@@ -9,19 +9,19 @@
 //-     a(href="/login") Login
 //- a(href="/parks" id="hr") Explore Parks
 
-nav(class="navbar navbar-expand-lg navbar-light bg-light")
+nav(class="navbar navbar-expand-lg")
     //- brand/logo
     p(class="navbar-brand nav-item") NatlParkNow
-    a(class="btn btn-outline-primary nav-link col-sm" href="/parks" id="hr") Explore Parks
-    div(class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup")
+    a(class="btn btn-outline-primary nav-link col-sm explore" href="/parks") Explore Parks
+    div(class="collapse navbar-collapse")
       if session.passport
-        a(class="nav-link col-sm" href="/favorites") Favorites
-        //- logout button
-        form(method="POST" class="form-inline nav-item")
-          button(class="btn btn-outline-primary" type="submit" formaction="/logout") Logout
+        //- button(class="btn btn-primary nav-link" href="/favorites") Favorites
+          //- form(method="POST" class="form-inline")
+
+        a(class="btn btn-outline-primary button-divide favorite" href="/favorites") Favorites
+        a(class="btn btn-outline-primary button-space logout" href="/logout") Logout
       else if !session.passport
-          div(class="nav-item row")
               //- login button
-              a(class="btn btn-primary nav-link col-sm" href="/login") Login
+              a(class="btn btn-primary nav-link button-divide favorite" href="/login") Login
               //- register button
-              a(class="btn btn-info nav-link col-sm" href="/register") Register
+              a(class="btn btn-info nav-link button-space" href="/register") Register
