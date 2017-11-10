@@ -5,9 +5,9 @@ block content
       each park in sortedParks
         if(park.parks.length)
           li
-            h4= park.state
-            //- ul
+            h4(class="statetitle")= park.state
+            ul
             each parkName in park.parks
-              //- li
+              li
               -let url = `/parks/` + parkName.id + `/`
-                a(class="text-center" href=url) #{parkName.fullName} 
+                a(class="textleft" href=url) #{parkName.fullName} 

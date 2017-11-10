@@ -18,25 +18,39 @@ $rustred3: #993a22;
 body { 
   margin: 0; 
   background-color:$whitegrey; 
+  font-family: 'Libre Franklin', sans-serif;   
 }
-
+h1, h2, h3, h4 {
+  font-family: 'Heebo', sans-serif;  
+}
 li {
   text-decoration: none;
   list-style: none;
 }
 
+.textleft {
+  margin-left: 11%;
+}
 a {
   color: black
 }
 
+nav {
+  background-color: white;
+}
 a:hover {
   color: forestgreen;
   text-decoration: none;
 }
 .offset-left {
-  margin-left: 22%;
+  margin-left: 17%;
 }
-
+.statetitle{
+  padding-top: 2%;
+  font-family: 'Libre Franklin', sans-serif; 
+  border-bottom: 2px solid $black;
+  width: 80%;
+}
 .top-margin {
   margin-top: 2%;
 }
