@@ -2,7 +2,12 @@ extends layout.pug
 block content
   h1
     ul(class="offset-left")
-      each park in natParks  
-        li
-        -let url = `/parks/` + park.id + `/`
-        a(class="text-center" href=url) #{park.fullName} 
+      each park in sortedParks
+        if(park.parks.length)
+          li
+            h4(class="statetitle")= park.state
+            ul
+            each parkName in park.parks
+              li
+              -let url = `/parks/` + parkName.id + `/`
+                a(class="textleft" href=url) #{parkName.fullName} 

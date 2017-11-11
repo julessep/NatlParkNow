@@ -1,8 +1,10 @@
 extends layout.pug
 block content
-  h1 Your Favorite Parks!
-  ul
-    each favorite in favorites
-      -let url = `http://localhost:8080/parks/` + favorite.parkId
-      a(href=url) #{favorite.name}
-      br
+  h2(class="text-center") Take another look at your favorite parks: 
+  h4
+    ul(class="text-center")
+      each favorite in favorites
+        li
+        -let url = `http://localhost:8080/parks/` + favorite.parkId      
+        a(class="text-center" href=url) #{favorite.name}
+        br

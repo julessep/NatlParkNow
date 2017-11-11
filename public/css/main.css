@@ -1,20 +1,36 @@
 body {
   margin: 0;
-  background-color: white; }
+  background-color: #f5f8fa;
+  font-family: 'Libre Franklin', sans-serif; }
+
+h1, h2, h3 {
+  font-family: 'Heebo', sans-serif; }
 
 li {
   text-decoration: none;
   list-style: none; }
 
+.textleft {
+  margin-left: 11%; }
+
 a {
   color: black; }
+
+nav {
+  background-color: white; }
 
 a:hover {
   color: forestgreen;
   text-decoration: none; }
 
 .offset-left {
-  margin-left: 22%; }
+  margin-left: 17%; }
+
+.statetitle {
+  padding-top: 2%;
+  font-family: 'Libre Franklin', sans-serif;
+  border-bottom: 2px solid #14171a;
+  width: 80%; }
 
 .top-margin {
   margin-top: 2%; }
@@ -29,10 +45,90 @@ img {
   padding: 0; }
 
 .twitterPhotos {
-  height: 400px;
+  height: 500px;
   width: auto;
   overflow: hidden; }
 
 .no-padding {
   padding-right: 0 !important;
   padding-left: 0 !important; }
+
+.small-margin {
+  margin-left: 2%; }
+
+.explore {
+  background-color: #CE8A56;
+  border-color: transparent;
+  color: white;
+  margin-left: 27%; }
+
+a:hover.explore {
+  background-color: #C26D2C;
+  border-color: #C26D2C; }
+
+.button-divide {
+  margin-left: 47%; }
+
+.button-space {
+  margin-left: 3%; }
+
+.favorite {
+  border-color: #83391e;
+  color: #83391e;
+  background-color: transparent; }
+
+a:hover.favorite {
+  background-color: #83391e;
+  border-color: #83391e;
+  color: white; }
+
+btn-outline-primary:not([disabled]):not(.disabled):active {
+  background-color: #993a22;
+  border-color: #993a22;
+  color: white; }
+
+a:active.favorite {
+  background-color: #993a22;
+  border-color: #993a22;
+  color: white; }
+
+.logout {
+  border-color: #93A644;
+  color: #93A644; }
+
+a:hover.logout {
+  background-color: #93A644;
+  border-color: #93A644;
+  color: white; }
+
+.btn-outline-primary:focus, .btn-outline-primary:focus {
+  box-shadow: none; }
+
+btn-outline-primary:not([disabled]):not(.disabled):active {
+  background-color: #993a22;
+  border-color: #993a22;
+  color: white; }
+
+a:active.logout {
+  background-color: #993a22;
+  border-color: #993a22;
+  color: white; }
+
+.save-fav {
+  border-color: #83391e;
+  color: #83391e; }
+
+a:hover.save-fav {
+  background-color: #83391e;
+  border-color: #83391e;
+  color: white; }
+
+btn-outline-primary:not([disabled]):not(.disabled):active {
+  background-color: #993a22;
+  border-color: #993a22;
+  color: white; }
+
+a:active.save-fav {
+  background-color: #993a22;
+  border-color: #993a22;
+  color: white; }
